@@ -1,0 +1,53 @@
+{
+  "name": "pinlogue",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "dev": "concurrently \"BROWSER=open npm start\" \"node backend/server.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap-icons": "^1.13.1",
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "firebase": "^12.6.0",
+    "firebase-admin": "^13.6.0",
+    "leaflet": "^1.9.4",
+    "motion": "^12.39.0",
+    "multer": "^2.0.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-easy-crop": "^5.5.7",
+    "react-leaflet": "^5.0.0",
+    "react-router-dom": "^7.9.5",
+    "react-scripts": "^5.0.1",
+    "react-select": "^5.10.2",
+    "sass": "^1.94.0",
+    "uuid": "^13.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/uuid": "^10.0.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^8.57.1",
+    "globals": "^17.6.0",
+    "wrangler": "^4.82.2"
+  }
+}

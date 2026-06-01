@@ -1,0 +1,2752 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+button:hover {
+  opacity: 0.8;
+}
+
+input {
+  height: 34px;
+  padding: 0 6px;
+  box-sizing: border-box;
+  color: #fff;
+  caret-color: #fff;
+  background-color: transparent;
+  border: solid 1px #fff;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+input:hover {
+  border: 1px solid #ccc;
+}
+input:focus {
+  outline: none;
+}
+
+textarea {
+  padding: 6px 6px;
+  box-sizing: border-box;
+  color: #fff;
+  caret-color: #fff;
+  background-color: transparent;
+  border: solid 1px #fff;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  resize: none;
+}
+textarea:hover {
+  border: 1px solid #ccc;
+}
+textarea {
+  /* 整個滾動條 */
+}
+textarea::-webkit-scrollbar {
+  width: 5px;
+  /* 滾動條寬度 */
+}
+textarea {
+  /* 滾動條軌道 */
+}
+textarea::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+textarea {
+  /* 滾動條滑塊 */
+}
+textarea::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 12px;
+}
+textarea {
+  /* 滑塊懸停效果 */
+}
+textarea::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+textarea:focus {
+  outline: none;
+}
+
+.select {
+  position: relative;
+  width: 78px;
+  height: 34px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  color: #fff;
+}
+.select.mini {
+  width: 72px;
+  height: 18px;
+}
+.select .select-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  font-weight: normal;
+  color: #eee;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  background: transparent;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+.select .select-display:hover {
+  border: 1px solid #ccc;
+}
+.select .select-display.mini {
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+.select .select-display .colorDot {
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+.select .select-display .arrow {
+  transform: rotateZ(180deg);
+  transition: all 0.3s ease;
+}
+.select .select-display .arrow.upside {
+  transform: rotateZ(0deg);
+}
+.select .select-options {
+  position: absolute;
+  top: 38px;
+  left: 0;
+  width: 100%;
+  background: #1e2a30;
+  border: 1px solid #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  z-index: 20;
+}
+.select .select-options.mini {
+  border: 1px solid #777;
+  top: 22px;
+}
+.select .select-options .select-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 34px;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  background: rgba(19, 28, 33, 0);
+  transition: all 0.2s ease;
+}
+.select .select-options .select-option.mini {
+  height: 24px;
+  padding: 4px 8px;
+}
+.select .select-options .select-option.selected {
+  background: rgba(190, 201, 74, 0.7);
+}
+.select .select-options .select-option:hover {
+  background: rgba(190, 201, 74, 0.7);
+}
+.select .select-options .select-option .colorDot {
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.tagSelect {
+  position: relative;
+  flex: 1;
+  height: 34px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  color: #fff;
+}
+.tagSelect .select-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 34px;
+  padding: 2px 6px;
+  box-sizing: border-box;
+  background: transparent;
+  font-size: 13px;
+  font-weight: normal;
+  color: #eee;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+.tagSelect .select-display:hover {
+  border: 1px solid #ccc;
+}
+.tagSelect .select-display .colorDot {
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+.tagSelect .select-display .arrow {
+  transform: rotateZ(180deg);
+  transition: all 0.3s ease;
+}
+.tagSelect .select-display .arrow.upside {
+  transform: rotateZ(0deg);
+}
+.tagSelect .select-options {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 6px;
+  position: absolute;
+  top: 38px;
+  left: 0;
+  padding: 6px 6px;
+  box-sizing: border-box;
+  background: rgba(19, 28, 33, 0.8);
+  border: 1px solid #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  z-index: 20;
+}
+.tagSelect .select-options .select-option {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+  box-sizing: border-box;
+  background: rgba(19, 28, 33, 0);
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+.tagSelect .select-options .select-option.selected {
+  opacity: 1;
+}
+.tagSelect .select-options .select-option:hover {
+  opacity: 1;
+}
+.tagSelect .select-options .select-option .colorDot {
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.tagContainer {
+  padding: 4px;
+  box-sizing: border-box;
+  border: solid 1px #fff;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.tagContainer:hover {
+  opacity: 0.7;
+}
+.tagContainer .tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 1px 4px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 14px;
+  font-weight: bolder;
+  color: #fff;
+}
+.tagContainer .tag i {
+  font-size: 12px;
+}
+
+.buttonSelect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 25px;
+  padding: 4px 8px;
+  color: #fff;
+  border: solid 1px #fff;
+  background-color: transparent;
+  border-radius: 6px;
+  text-wrap-mode: nowrap;
+  cursor: pointer;
+}
+.buttonSelect.selected {
+  color: #bec94a;
+  border: solid 1px #bec94a;
+}
+
+.buttonFinish {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0 12px;
+  height: 34px;
+  color: #fff;
+  border: none;
+  background-color: #bec94a;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.buttonFinish:hover {
+  opacity: 0.8;
+}
+.buttonFinish.disable {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.buttonBack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0 12px;
+  height: 34px;
+  color: #fff;
+  border: none;
+  background-color: #777;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.buttonBack:hover {
+  opacity: 0.8;
+}
+.buttonBack.disable {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.buttonDelete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0 12px;
+  height: 34px;
+  color: #fff;
+  border: none;
+  background-color: #da4d4d;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.buttonDelete:hover {
+  opacity: 0.8;
+}
+.buttonDelete.disable {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.buttonCancel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0 12px;
+  height: 34px;
+  border-radius: 8px;
+  border: solid 1px #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.buttonCancel:hover {
+  opacity: 0.8;
+}
+
+.placeNumberTag {
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 0 #333, 0 -1px 0 #333, 1px 0 0 #333, -1px 0 0 #333;
+  font-weight: bolder;
+  background-color: #da4d4d;
+  border: solid 1px #333;
+  border-radius: 999px;
+  z-index: 9;
+}
+
+.marker {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+.marker:hover .marker-wrap .marker-inner {
+  transform: scale(1.1);
+}
+.marker:hover .marker-label {
+  transform: translateX(-50%) translateY(0px);
+}
+.marker .marker-wrap {
+  position: relative;
+  width: 38px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+.marker .marker-wrap .marker-inner {
+  position: relative;
+  width: 34px;
+  height: 40px;
+  transition: all 0.2s ease;
+  transform-origin: center bottom;
+}
+.marker .marker-wrap .marker-inner .pin {
+  width: 100%;
+  height: 100%;
+}
+.marker .marker-wrap .marker-inner .category-icon {
+  position: absolute;
+  top: 31%;
+  /* 微調用，通常 35~40% */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  /* 小 icon 尺寸 */
+  color: white;
+  /* 對比色 */
+  pointer-events: none;
+}
+.marker .marker-label {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  display: flex;
+  gap: 2px;
+  transform: translateX(-50%) translateY(6px);
+  white-space: nowrap;
+  padding: 4px 8px;
+  font-size: 14px;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 0 #333, 0 -1px 0 #333, 1px 0 0 #333, -1px 0 0 #333;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.trip {
+  position: relative;
+  display: inline-block;
+  pointer-events: auto;
+  transform: translate(-50%, -150%);
+}
+.trip:hover .trip-wrap {
+  transform: scale(1.1);
+}
+.trip:hover .trip-label {
+  transform: translateX(-50%) translateY(0px);
+}
+.trip .trip-wrap {
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+  text-wrap-mode: nowrap;
+  display: flex;
+  border-radius: 6px;
+  padding: 2px 4px 2px 2px;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  transform-origin: center bottom;
+  transition: all ease 0.2s;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+.trip .trip-wrap .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+}
+.trip .trip-label {
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  white-space: nowrap;
+  padding: 4px 8px;
+  font-size: 14px;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 0 #333, 0 -1px 0 #333, 1px 0 0 #333, -1px 0 0 #333;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.word-break {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.cropModalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.cropModalBackdrop .cropModal {
+  position: relative;
+  width: min(90vw, 720px);
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+}
+.cropModalBackdrop .cropModal .cropContainer {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  background: #111;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cropModalBackdrop .cropModal .cropControls {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.cropModalBackdrop .cropModal .cropControls input[type=range] {
+  flex: 1;
+}
+.cropModalBackdrop .cropModal .cropButtons {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.cropModalBackdrop .cropModal .cropButtons button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: #fff;
+  background-color: #333;
+}
+
+.visualCoverFrame {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+}
+.visualCoverFrame .visualCoverImage {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
+}
+.visualCoverFrame .croppedImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.visualCoverFrame .croppedImageWrapper .visualCoverImage {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
+  transition: opacity 0.25s ease;
+}
+.visualCoverFrame .croppedImageWrapper .visualCoverImage.isLoading {
+  opacity: 0;
+}
+.visualCoverFrame .croppedImageWrapper .visualCoverImage.isLoaded {
+  opacity: 1;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: #333;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #131c21;
+}
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+}
+.container .panelContainer {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 100%;
+  background-color: #131c21;
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+}
+.container .panelContainer .groupInfoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.container .panelContainer .groupInfoContainer .groupInfo {
+  display: flex;
+  width: 100%;
+  border: solid 1px #bec94a;
+  border-radius: 18px;
+}
+.container .panelContainer .groupInfoContainer .groupInfo .picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.container .panelContainer .groupInfoContainer .groupInfo .picture .pictureContainer {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.container .panelContainer .groupInfoContainer .groupInfo .picture .pictureContainer img {
+  width: 100%;
+  height: 100%;
+  -o-object-position: center;
+     object-position: center;
+}
+.container .panelContainer .groupInfoContainer .groupInfo .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #bec94a;
+  font-weight: bolder;
+  letter-spacing: 2px;
+  flex: 1;
+}
+.container .panelContainer .groupInfoContainer .groupInfo .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+  cursor: pointer;
+}
+.container .panelContainer .contentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 0 12px;
+  box-sizing: border-box;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE、Edge (舊版) */
+}
+.container .panelContainer .contentContainer::-webkit-scrollbar {
+  /* Chrome, Safari */
+  display: none;
+}
+.container .panelContainer .contentContainer {
+  -webkit-overflow-scrolling: touch;
+}
+.container .panelContainer .contentContainer .pinListItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  height: 78px;
+  padding: 6px;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  border: solid 1px rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.container .panelContainer .contentContainer .pinListItem:hover {
+  border: solid 1px rgba(190, 201, 74, 0.6);
+  background-color: rgba(190, 201, 74, 0.05);
+}
+.container .panelContainer .contentContainer .pinListItem .pictureContainer {
+  width: 66px;
+  height: 66px;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.container .panelContainer .contentContainer .pinListItem .pictureContainer img {
+  width: 100%;
+  height: 100%;
+  -o-object-position: center;
+     object-position: center;
+}
+.container .panelContainer .contentContainer .pinListItem .infoContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: auto;
+}
+.container .panelContainer .contentContainer .pinListItem .infoContainer .titleContainer {
+  display: flex;
+  width: 100%;
+  height: 20px;
+}
+.container .panelContainer .contentContainer .pinListItem .infoContainer .titleContainer .title {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex: 1;
+  height: 100%;
+  font-size: 14px;
+  color: white;
+  font-weight: bolder;
+  box-sizing: border-box;
+}
+.container .panelContainer .contentContainer .pinListItem .infoContainer .titleContainer .title .tag {
+  display: flex;
+  padding: 2px;
+  border: solid #fff 1px;
+  border-radius: 6px;
+}
+.container .panelContainer .contentContainer .pinListItem .infoContainer .titleContainer .title .tag .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+}
+.container .panelContainer .contentContainer .pinListItem .infoContainer .titleContainer .title .tag .dayTag {
+  font-size: 10px;
+}
+.container .panelContainer .contentContainer .pinListItem .infoContainer .titleContainer .ranking {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 34px;
+  height: 100%;
+  font-size: 12px;
+  color: #fff;
+  box-sizing: border-box;
+}
+.container .panelContainer .contentContainer .pinListItem .infoContainer .contextContainer {
+  width: 100%;
+  height: 33px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  letter-spacing: 2px;
+  box-sizing: border-box;
+}
+.container .panelContainer .modeButtonContainer {
+  display: flex;
+  width: 100%;
+  height: 55px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+.container .panelContainer .modeButtonContainer .buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+.container .panelContainer .modeButtonContainer .buttonContainer a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.container .panelContainer .modeButtonContainer .buttonContainer a .pinListButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #bec94a;
+  background-color: unset;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.container .panelContainer .modeButtonContainer .buttonContainer a .pinListButton.selected {
+  color: #131c21;
+  background-color: #bec94a;
+}
+.container .panelContainer .modeButtonContainer .buttonContainer a .pinListButton:hover {
+  opacity: 0.7;
+}
+.container .panelContainer .modeButtonContainer .buttonContainer .postButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.container .panelContainer .modeButtonContainer .buttonContainer .postButton.selected {
+  background-color: rgba(190, 201, 74, 0.2);
+}
+.container .panelContainer .modeButtonContainer .buttonContainer .postButton:hover {
+  opacity: 0.7;
+}
+.container .panelContainer .markerControlContainer {
+  display: flex;
+  width: 100%;
+  height: 68px;
+  padding: 24px 12px 0 12px;
+  box-sizing: border-box;
+}
+.container .panelContainer .markerControlContainer .return {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.container .panelContainer .markerControlContainer .return .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.container .panelContainer .markerControlContainer .title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  height: 100%;
+  padding: 0 12px;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  color: white;
+  font-size: 20px;
+  font-weight: bolder;
+}
+.container .panelContainer .markerControlContainer .title .tag {
+  display: flex;
+  padding: 2px;
+  border: solid #fff 1px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.container .panelContainer .markerControlContainer .title .tag .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+}
+.container .panelContainer .markerControlContainer .title .tag .dayTag {
+  font-size: 10px;
+}
+.container .panelContainer .markerControlContainer .edit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+}
+.container .panelContainer .markerControlContainer .edit .button {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.container .panelContainer .markerControlContainer .edit .button:hover {
+  opacity: 0.8;
+}
+.container .panelContainer .markerControlContainer .isEdit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  height: 100%;
+  padding-left: 12px;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+}
+.container .panelContainer .markerInfoContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+}
+.container .panelContainer .markerInfoContainer .info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.container .panelContainer .markerInfoContainer .info .picture {
+  width: 276px;
+  height: 276px;
+  border-radius: 24px;
+  background-color: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.container .panelContainer .markerInfoContainer .info .picture img {
+  width: 100%;
+  height: 100%;
+  -o-object-position: center;
+     object-position: center;
+}
+.container .panelContainer .markerInfoContainer .info .context {
+  padding: 0 12px;
+  box-sizing: border-box;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  letter-spacing: 2.5px;
+}
+.container .panelContainer .markerInfoContainer .info .editPicture {
+  width: 276px;
+  height: 276px;
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  border: solid 1px white;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+.container .panelContainer .markerInfoContainer .info .editPicture .editControl {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+.container .panelContainer .markerInfoContainer .info .editPicture .editControl .button {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 34px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #fff;
+  background-color: #555;
+  border-radius: 6px;
+  padding: 0 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+.container .panelContainer .markerInfoContainer .info .editPicture:hover {
+  border: solid 1px rgba(255, 255, 255, 0.7);
+}
+.container .panelContainer .markerInfoContainer .info .editPicture:hover .button {
+  opacity: 1;
+}
+.container .panelContainer .markerInfoContainer .editControl {
+  width: 100%;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  display: flex;
+}
+.container .mobileHeader {
+  width: 100%;
+  height: 72px;
+  background-color: #131c21;
+}
+.container .mobileHeader .groupInfoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.container .mobileHeader .groupInfoContainer .groupInfo {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border: solid 1px #bec94a;
+  border-radius: 18px;
+}
+.container .mobileHeader .groupInfoContainer .groupInfo .picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.container .mobileHeader .groupInfoContainer .groupInfo .picture .pictureContainer {
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.container .mobileHeader .groupInfoContainer .groupInfo .picture .pictureContainer img {
+  width: 100%;
+  height: 100%;
+  -o-object-position: center;
+     object-position: center;
+}
+.container .mobileHeader .groupInfoContainer .groupInfo .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #bec94a;
+  font-weight: bolder;
+  letter-spacing: 2px;
+  flex: 1;
+}
+.container .mobileHeader .groupInfoContainer .groupInfo .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+  cursor: pointer;
+}
+.container .mapContainer {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  box-sizing: border-box;
+}
+@media (min-width: 768px) {
+  .container .mapContainer {
+    flex: 1;
+    width: unset;
+    height: 100%;
+  }
+}
+.container .mapContainer .overlayUI {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  pointer-events: none;
+}
+.container .mapContainer .overlayUI .tagPanel {
+  position: absolute;
+  top: 0px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 7px;
+  z-index: 1000;
+  height: 50px;
+  font-size: 14px;
+  max-width: 97%;
+  margin: 6px 6px;
+  box-sizing: border-box;
+  padding: 0 6px;
+  border-radius: 999px;
+  background-color: rgba(19, 28, 33, 0.8);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  pointer-events: auto;
+}
+@media (min-width: 768px) {
+  .container .mapContainer .overlayUI .tagPanel {
+    padding: 0 12px;
+    margin: 12px 12px;
+  }
+}
+.container .mapContainer .overlayUI .tagPanel .tagsContainer {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 7px;
+  border-radius: 6px;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE、Edge (舊版) */
+}
+.container .mapContainer .overlayUI .tagPanel .tagsContainer::-webkit-scrollbar {
+  /* Chrome, Safari */
+  display: none;
+}
+.container .mapContainer .overlayUI .tagPanel .button {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.container .mapContainer .overlayUI .tagPanel .button:hover {
+  opacity: 0.7;
+}
+.container .mapContainer .overlayUI .AddPinPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: absolute;
+  bottom: 82px;
+  right: 16px;
+  z-index: 1000;
+  pointer-events: auto;
+}
+@media (min-width: 768px) {
+  .container .mapContainer .overlayUI .AddPinPanel {
+    bottom: 16px;
+    right: 16px;
+  }
+}
+.container .mapContainer .overlayUI .AddPinPanel button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(19, 28, 33, 0.8);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.container .mapContainer .overlayUI .AddPinPanel button:hover {
+  transform: scale(1.1);
+}
+.container .mapContainer .overlayUI .tripPanel {
+  position: absolute;
+  bottom: 142px;
+  right: 8px;
+  z-index: 1000;
+  pointer-events: auto;
+  width: 182px;
+  height: -moz-fit-content;
+  height: fit-content;
+  color: #fff;
+  font-size: 14px;
+  padding: 12px;
+  margin: 0;
+  padding: 12px 12px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-color: #131c21;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+@media (min-width: 768px) {
+  .container .mapContainer .overlayUI .tripPanel {
+    width: 220px;
+    bottom: 78px;
+    right: 16px;
+  }
+}
+.container .mapContainer .overlayUI .tripPanel .fstStep {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.container .mapContainer .overlayUI .tripPanel .fstStep .picture {
+  width: 158px;
+  height: 158px;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: solid 1px white;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: border 0.2s ease;
+  cursor: pointer;
+}
+@media (min-width: 768px) {
+  .container .mapContainer .overlayUI .tripPanel .fstStep .picture {
+    width: 196px;
+    height: 196px;
+  }
+}
+.container .mapContainer .overlayUI .tripPanel .fstStep .picture:hover {
+  border: solid 1px rgba(255, 255, 255, 0.7);
+}
+.container .mapContainer .overlayUI .tripPanel .fstStep .picture:hover img {
+  opacity: 0.8;
+}
+.container .mapContainer .overlayUI .tripPanel .fstStep .picture:hover .icon {
+  opacity: 1;
+}
+.container .mapContainer .overlayUI .tripPanel .fstStep .picture .icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0.8;
+  transform: translate(-50%, -50%);
+  transition: all 0.2s ease;
+}
+.container .mapContainer .overlayUI .tripPanel .fstStep .picture img {
+  width: 100%;
+  height: 100%;
+  -o-object-position: center;
+     object-position: center;
+  transition: opacity 0.2s ease;
+}
+.container .mapContainer .overlayUI .tripPanel .fstStep .add {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.container .mapContainer .overlayUI .tripPanel .fstStep .add .contentContainer {
+  width: 100%;
+  height: 150px;
+}
+.container .mapContainer .overlayUI .tripPanel .fstStep .add .controlContainer {
+  width: 100%;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .container .mapContainer .overlayUI .tripPanel .secStep {
+    height: 80vh;
+  }
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .titleContainer {
+  display: flex;
+  gap: 3px;
+  width: 100%;
+  font-size: 20px;
+  font-weight: bolder;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .dayContainer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  height: 25px;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .dayContainer .button {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .dayContainer .selectContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE、Edge (舊版) */
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .dayContainer .selectContainer::-webkit-scrollbar {
+  /* Chrome, Safari */
+  display: none;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .dayContainer .selectContainer {
+  -webkit-overflow-scrolling: touch;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE、Edge (舊版) */
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer::-webkit-scrollbar {
+  /* Chrome, Safari */
+  display: none;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer {
+  -webkit-overflow-scrolling: touch;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+  height: 100px;
+  padding: 6px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  background-color: #28343b;
+  border: solid 1px #777;
+  transition: all ease 0.2s;
+  cursor: pointer;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem:hover {
+  background-color: rgba(40, 52, 59, 0.7);
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem.unselected {
+  opacity: 0.4;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .deleteButton {
+  position: absolute;
+  bottom: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  padding: 5px;
+  border: solid 1px #fff;
+  border-radius: 6px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background-color: rgba(30, 42, 48, 0.7);
+  cursor: pointer;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .deleteButton:hover {
+  opacity: 0.7;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .pictureContainer {
+  width: 87px;
+  height: 87px;
+  overflow: hidden;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer {
+  display: flex;
+  flex-direction: column;
+  width: 87px;
+  height: 87px;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar {
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  width: 100%;
+  height: 16px;
+  font-size: 10px;
+  font-weight: bolder;
+  color: #fff;
+  border-radius: 6px;
+  border: solid 1px #777;
+  background-color: #777;
+  transition: all ease 0.2s;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker {
+  display: flex;
+  padding: 8px;
+  box-sizing: border-box;
+  width: 87px;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #1e2a30;
+  border: 1px solid #777;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker .optionContainer {
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE、Edge (舊版) */
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker .optionContainer::-webkit-scrollbar {
+  /* Chrome, Safari */
+  display: none;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker .optionContainer {
+  -webkit-overflow-scrolling: touch;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker .optionContainer .hour {
+  color: #fff;
+  border-radius: 4px;
+  text-align: center;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  background: transparent;
+  cursor: pointer;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker .optionContainer .hour:hover {
+  opacity: 0.5;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker .optionContainer .minute {
+  color: #fff;
+  border-radius: 4px;
+  text-align: center;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  background: transparent;
+  cursor: pointer;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .mainBar {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .mainBar .info {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  flex-direction: column;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .mainBar .info .title {
+  display: flex;
+  gap: 3px;
+  font-weight: bolder;
+  font-size: 12px;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .mainBar .info .time {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 1px 3px;
+  box-sizing: border-box;
+  font-size: 10px;
+  border-radius: 6px;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .tripItem .infoContainer .mainBar .info .time.edit {
+  border: solid 1px #fff;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .transport {
+  width: 100%;
+  height: 36px;
+  min-height: 36px;
+  display: flex;
+  justify-content: center;
+  font-size: 10px;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .transport .transportContainer {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .transport .transportContainer .type {
+  width: 72px;
+  display: flex;
+  justify-content: end;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .transport .transportContainer .time {
+  display: flex;
+  justify-content: start;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .transport .transportContainer .line {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 1px;
+  height: 100%;
+  background-color: #555;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .contentContainer .transport .transportContainer .line .dot {
+  width: 5px;
+  height: 5px;
+  transform: rotateZ(45deg);
+  background-color: #ccc;
+}
+.container .mapContainer .overlayUI .tripPanel .secStep .controlContainer {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+.container .mapContainer .overlayUI .search-area-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  z-index: 1000;
+  max-width: 97%;
+  height: 50px;
+  font-size: 14px;
+  margin: 66px 6px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background-color: rgba(19, 28, 33, 0.8);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  pointer-events: auto;
+}
+@media (min-width: 768px) {
+  .container .mapContainer .overlayUI .search-area-button {
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: 12px 12px;
+  }
+}
+.container .mapContainer .overlayUI .search-area-button .searchBarInput {
+  width: 220px;
+  height: 34px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-align: center;
+  border-radius: 999px;
+}
+Ï .container .mapContainer .overlayUI .search-area-button .searchBarInput:focus::-moz-placeholder {
+  color: transparent;
+}
+Ï .container .mapContainer .overlayUI .search-area-button .searchBarInput:focus::placeholder {
+  color: transparent;
+}
+.container .mapContainer .overlayUI .search-area-button button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: solid 1px #fff;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+}
+.container .mapContainer .overlayUI .search-area-button .select {
+  width: 92px;
+}
+.container .mapContainer .overlayUI .search-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  height: 25px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  z-index: 1000;
+  pointer-events: none;
+}
+.container .mapContainer .overlayUI .search-hint button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  border: solid 1px #fff;
+  border-radius: 999px;
+  color: #fff;
+  background-color: #555;
+  pointer-events: auto;
+}
+.container .mapContainer .leaflet-control-container {
+  display: none;
+}
+.container .mapContainer .popupContainer .leaflet-popup-content-wrapper {
+  display: flex;
+  width: 400px !important;
+  height: 172px;
+  background-color: #131c21;
+  border-radius: 24px;
+}
+@media (min-width: 768px) {
+  .container .mapContainer .popupContainer .leaflet-popup-content-wrapper {
+    width: 490px !important;
+    height: 214px;
+  }
+}
+.container .mapContainer .popupContainer .leaflet-popup-content-wrapper .leaflet-popup-content {
+  display: flex;
+  width: 100% !important;
+  gap: 12px;
+  height: 100%;
+  color: #fff;
+  font-size: 14px;
+  padding: 12px;
+  margin: 0;
+  box-sizing: border-box;
+}
+.container .mapContainer .popupContainer .leaflet-popup-content-wrapper .leaflet-popup-content .picture {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: solid 1px white;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: border 0.2s ease;
+  cursor: pointer;
+}
+@media (min-width: 768px) {
+  .container .mapContainer .popupContainer .leaflet-popup-content-wrapper .leaflet-popup-content .picture {
+    width: 190px;
+    height: 190px;
+  }
+}
+.container .mapContainer .popupContainer .leaflet-popup-content-wrapper .leaflet-popup-content .picture:hover {
+  border: solid 1px rgba(255, 255, 255, 0.7);
+}
+.container .mapContainer .popupContainer .leaflet-popup-content-wrapper .leaflet-popup-content .picture:hover .icon {
+  opacity: 1;
+}
+.container .mapContainer .popupContainer .leaflet-popup-content-wrapper .leaflet-popup-content .picture .icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0.8;
+  transform: translate(-50%, -50%);
+  transition: all 0.2s ease;
+}
+.container .mapContainer .popupContainer .leaflet-popup-content-wrapper .leaflet-popup-content .add {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.container .mapContainer .popupContainer .leaflet-popup-content-wrapper .leaflet-popup-content .add .titleContainer {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+.container .mapContainer .popupContainer .leaflet-popup-content-wrapper .leaflet-popup-content .add .contentContainer {
+  width: 100%;
+  flex: 1;
+}
+.container .mapContainer .popupContainer .leaflet-popup-content-wrapper .leaflet-popup-content .add .controlContainer {
+  width: 100%;
+}
+.container .mapContainer .popupContainer .leaflet-popup-tip {
+  background: #131c21;
+}
+.container .mapContainer .popupContainer .leaflet-popup-close-button {
+  display: none;
+  color: #fff;
+}
+.container .mobileSheet {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #131c21;
+  border-radius: 30px 30px 0 0;
+  z-index: 9999;
+  box-shadow: 0 4px -4px rgba(0, 0, 0, 0.25);
+  touch-action: none;
+  display: flex;
+  flex-direction: column;
+}
+.container .mobileSheet .dragBarArea {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+.container .mobileSheet .dragBarArea .dragBar {
+  width: 52px;
+  height: 5px;
+  border-radius: 999px;
+  background-color: #5A6064;
+}
+.container .mobileSheet .sheetContent {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.container .mobileSheet .sheetContent .ContentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  min-height: 0;
+  height: 100%;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  min-height: 0;
+  height: 100%;
+  padding-top: 6px;
+  padding-bottom: 24px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE、Edge (舊版) */
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer::-webkit-scrollbar {
+  /* Chrome, Safari */
+  display: none;
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer {
+  -webkit-overflow-scrolling: touch;
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer .pinListItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  height: 78px;
+  padding: 6px;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  border: solid 1px rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer .pinListItem:hover {
+  border: solid 1px rgba(190, 201, 74, 0.6);
+  background-color: rgba(190, 201, 74, 0.05);
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer .pinListItem .pictureContainer {
+  width: 66px;
+  height: 66px;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer .pinListItem .pictureContainer img {
+  width: 100%;
+  height: 100%;
+  -o-object-position: center;
+     object-position: center;
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer .pinListItem .infoContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: auto;
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer .pinListItem .infoContainer .titleContainer {
+  display: flex;
+  width: 100%;
+  height: 20px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer .pinListItem .infoContainer .titleContainer .title {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex: 1;
+  height: 100%;
+  font-size: 14px;
+  color: white;
+  font-weight: bolder;
+  box-sizing: border-box;
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer .pinListItem .infoContainer .titleContainer .title .tag {
+  display: flex;
+  padding: 2px;
+  border: solid #fff 1px;
+  border-radius: 6px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer .pinListItem .infoContainer .titleContainer .title .tag .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer .pinListItem .infoContainer .titleContainer .title .tag .dayTag {
+  font-size: 10px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer .pinListItem .infoContainer .titleContainer .ranking {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 34px;
+  height: 100%;
+  font-size: 12px;
+  color: #fff;
+  box-sizing: border-box;
+}
+.container .mobileSheet .sheetContent .ContentContainer .listContainer .pinListItem .infoContainer .contextContainer {
+  width: 100%;
+  height: 33px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  letter-spacing: 2px;
+  box-sizing: border-box;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerControlContainer {
+  display: flex;
+  width: 100%;
+  height: 46px;
+  gap: 12px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerControlContainer .return {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerControlContainer .return .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerControlContainer .title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  height: 100%;
+  letter-spacing: 1px;
+  color: white;
+  font-size: 20px;
+  font-weight: bolder;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerControlContainer .title .tag {
+  display: flex;
+  padding: 2px;
+  border: solid #fff 1px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerControlContainer .title .tag .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerControlContainer .title .tag .dayTag {
+  font-size: 10px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerControlContainer .edit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerControlContainer .edit .button {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerControlContainer .edit .button:hover {
+  opacity: 0.8;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerControlContainer .isEdit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  height: 100%;
+  padding-left: 12px;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  flex: 1;
+  padding-bottom: 24px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE、Edge (舊版) */
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer::-webkit-scrollbar {
+  /* Chrome, Safari */
+  display: none;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer {
+  -webkit-overflow-scrolling: touch;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .info {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .info .picture {
+  width: 194px;
+  height: 194px;
+  border-radius: 24px;
+  background-color: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .info .picture img {
+  width: 100%;
+  height: 100%;
+  -o-object-position: center;
+     object-position: center;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .info .context {
+  color: white;
+  font-size: 14px;
+  letter-spacing: 2.5px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .info .editPicture {
+  width: 194px;
+  height: 194px;
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  border: solid 1px white;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .info .editPicture .editControl {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .info .editPicture .editControl .button {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 34px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #fff;
+  background-color: #555;
+  border-radius: 6px;
+  padding: 0 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .info .editPicture:hover {
+  border: solid 1px rgba(255, 255, 255, 0.7);
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .info .editPicture:hover .button {
+  opacity: 1;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel {
+  pointer-events: auto;
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  color: #fff;
+  font-size: 14px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep {
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .titleContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 0 12px;
+  box-sizing: border-box;
+  font-size: 20px;
+  font-weight: bolder;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .titleContainer .dayContainer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  height: 25px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .titleContainer .dayContainer .button {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .titleContainer .dayContainer .selectContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE、Edge (舊版) */
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .titleContainer .dayContainer .selectContainer::-webkit-scrollbar {
+  /* Chrome, Safari */
+  display: none;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .titleContainer .dayContainer .selectContainer {
+  -webkit-overflow-scrolling: touch;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 24px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE、Edge (舊版) */
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer::-webkit-scrollbar {
+  /* Chrome, Safari */
+  display: none;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer {
+  -webkit-overflow-scrolling: touch;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 75%;
+  height: 100px;
+  padding: 6px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  background-color: #28343b;
+  border: solid 1px #777;
+  transition: all ease 0.2s;
+  cursor: pointer;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem:hover {
+  background-color: rgba(40, 52, 59, 0.7);
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem.unselected {
+  opacity: 0.4;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .deleteButton {
+  position: absolute;
+  bottom: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  padding: 5px;
+  border: solid 1px #fff;
+  border-radius: 6px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background-color: rgba(30, 42, 48, 0.7);
+  cursor: pointer;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .deleteButton:hover {
+  opacity: 0.7;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .pictureContainer {
+  width: 87px;
+  height: 87px;
+  overflow: hidden;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 87px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar {
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  width: 100%;
+  height: 16px;
+  font-size: 12px;
+  font-weight: bolder;
+  color: #fff;
+  border-radius: 6px;
+  border: solid 1px #777;
+  background-color: #777;
+  transition: all ease 0.2s;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker {
+  display: flex;
+  padding: 8px;
+  box-sizing: border-box;
+  width: 87px;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #1e2a30;
+  border: 1px solid #777;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker .optionContainer {
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE、Edge (舊版) */
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker .optionContainer::-webkit-scrollbar {
+  /* Chrome, Safari */
+  display: none;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker .optionContainer {
+  -webkit-overflow-scrolling: touch;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker .optionContainer .hour {
+  color: #fff;
+  border-radius: 4px;
+  text-align: center;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  background: transparent;
+  cursor: pointer;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker .optionContainer .hour:hover {
+  opacity: 0.5;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .timeBar .timePicker .optionContainer .minute {
+  color: #fff;
+  border-radius: 4px;
+  text-align: center;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  background: transparent;
+  cursor: pointer;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .mainBar {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .mainBar .info {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  flex-direction: column;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .mainBar .info .title {
+  display: flex;
+  gap: 3px;
+  font-weight: bolder;
+  font-size: 14px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .mainBar .info .time {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 1px 3px;
+  box-sizing: border-box;
+  font-size: 12px;
+  border-radius: 6px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .tripItem .infoContainer .mainBar .info .time.edit {
+  border: solid 1px #fff;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .transport {
+  width: 100%;
+  height: 36px;
+  min-height: 36px;
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .transport .transportContainer {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .transport .transportContainer .type {
+  width: 72px;
+  display: flex;
+  justify-content: end;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .transport .transportContainer .time {
+  width: 72px;
+  display: flex;
+  justify-content: start;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .transport .transportContainer .line {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 1px;
+  height: 100%;
+  background-color: #555;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .contentContainer .transport .transportContainer .line .dot {
+  width: 5px;
+  height: 5px;
+  transform: rotateZ(45deg);
+  background-color: #ccc;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .tripPanel .secStep .controlContainer {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+.container .mobileSheet .sheetContent .ContentContainer .markerInfoContainer .editControl {
+  width: 100%;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  display: flex;
+}
+.container .mobileSheet .sheetContent .modeButtonContainer {
+  width: 100%;
+  height: 46px;
+  display: flex;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+.container .mobileSheet .sheetContent .modeButtonContainer .buttonContainer {
+  width: 100%;
+  height: 100%;
+}
+.container .mobileSheet .sheetContent .modeButtonContainer .buttonContainer a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.container .mobileSheet .sheetContent .modeButtonContainer .buttonContainer a .pinListButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #bec94a;
+  background-color: unset;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.container .mobileSheet .sheetContent .modeButtonContainer .buttonContainer a .pinListButton.selected {
+  color: #131c21;
+  background-color: #bec94a;
+}
+
+.home {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #131c21;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.home .headerContainer {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  padding: 0 24px;
+  box-sizing: border-box;
+  align-items: center;
+}
+.home .headerContainer .return {
+  min-width: 52px;
+  display: flex;
+  justify-content: flex-start;
+}
+.home .headerContainer .logo {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.home .headerContainer .control {
+  min-width: 52px;
+  display: flex;
+  justify-content: flex-end;
+}
+.home .headerContainer .control .searchBarInput {
+  width: 264px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-align: center;
+  border-radius: 999px;
+}
+.home .headerContainer .control .searchBarInput:focus::-moz-placeholder {
+  color: transparent;
+}
+.home .headerContainer .control .searchBarInput:focus::placeholder {
+  color: transparent;
+}
+.home .contentContainer {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .home .contentContainer {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+.home .contentContainer .leftContainer {
+  display: none;
+}
+@media (min-width: 768px) {
+  .home .contentContainer .leftContainer {
+    width: 300px;
+  }
+}
+.home .contentContainer .mainContainer {
+  width: 100%;
+  min-width: 368px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .home .contentContainer .mainContainer {
+    width: 100%;
+    max-width: 1024px;
+    gap: 18px;
+    flex-direction: row;
+  }
+}
+.home .contentContainer .mainContainer .categoryContainer {
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+@media (min-width: 768px) {
+  .home .contentContainer .mainContainer .categoryContainer {
+    height: 100%;
+    padding: unset;
+  }
+}
+.home .contentContainer .mainContainer .categoryContainer .titleHeader {
+  width: 100%;
+  height: 32px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bolder;
+  letter-spacing: 2px;
+  color: #fff;
+  background-color: #777;
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .home .contentContainer .mainContainer .categoryContainer .titleHeader {
+    font-size: 14px;
+  }
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE、Edge (舊版) */
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer::-webkit-scrollbar {
+  /* Chrome, Safari */
+  display: none;
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer {
+  -webkit-overflow-scrolling: touch;
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  height: 78px;
+  padding: 6px;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  border: solid 1px rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem:hover {
+  border: solid 1px rgba(190, 201, 74, 0.6);
+  background-color: rgba(190, 201, 74, 0.05);
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem .pictureContainer {
+  width: 66px;
+  height: 66px;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem .pictureContainer img {
+  width: 100%;
+  height: 100%;
+  -o-object-position: center;
+     object-position: center;
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem .infoContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: auto;
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem .infoContainer .titleContainer {
+  display: flex;
+  width: 100%;
+  height: 20px;
+  gap: 3px;
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem .infoContainer .titleContainer .title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 100%;
+  font-size: 16px;
+  color: white;
+  font-weight: bolder;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem .infoContainer .titleContainer .title {
+    font-size: 14px;
+  }
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem .infoContainer .titleContainer .numberInfoContainer {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  color: #fff;
+  font-size: 12px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3px;
+}
+@media (min-width: 768px) {
+  .home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem .infoContainer .titleContainer .numberInfoContainer {
+    font-size: 10px;
+  }
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem .infoContainer .titleContainer .numberInfoContainer .numberInfo {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem .infoContainer .contextContainer {
+  width: 100%;
+  height: 33px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  letter-spacing: 2px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .home .contentContainer .mainContainer .categoryContainer .listContainer .clubListItem .infoContainer .contextContainer {
+    font-size: 12px;
+  }
+}
+.home .contentContainer .mainContainer .categoryContainer .listContainer .lookMoreBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 6px;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  border: solid 1px rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+.home .contentContainer .rightContainer {
+  display: none;
+}
+@media (min-width: 768px) {
+  .home .contentContainer .rightContainer {
+    width: 300px;
+  }
+}
+.home .addPanel {
+  position: absolute;
+  bottom: 78px;
+  right: 16px;
+  z-index: 1000;
+  pointer-events: auto;
+  width: 220px;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #fff;
+  font-size: 14px;
+  padding: 12px;
+  margin: 0;
+  padding: 12px 12px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+.home .addPanel .picture {
+  width: 196px;
+  height: 196px;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: solid 1px white;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: border 0.2s ease;
+  cursor: pointer;
+}
+.home .addPanel .picture:hover {
+  border: solid 1px rgba(255, 255, 255, 0.7);
+}
+.home .addPanel .picture:hover img {
+  opacity: 0.8;
+}
+.home .addPanel .picture:hover .icon {
+  opacity: 1;
+}
+.home .addPanel .picture .icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0.8;
+  transform: translate(-50%, -50%);
+  transition: all 0.2s ease;
+}
+.home .addPanel .picture img {
+  width: 100%;
+  height: 100%;
+  -o-object-position: center;
+     object-position: center;
+  transition: opacity 0.2s ease;
+}
+.home .addPanel .add {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.home .addPanel .add .contentContainer {
+  width: 100%;
+}
+.home .addPanel .add .controlContainer {
+  width: 100%;
+}
+.home .addButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1000;
+  pointer-events: auto;
+}
+.home .addButton button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.home .addButton button:hover {
+  transform: scale(1.1);
+}
+
+.login {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #131c21;
+}
+.login .inputPanel {
+  width: 250px;
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+  margin-bottom: 5rem;
+}
+.login .inputPanel .inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  font-size: 14px;
+  color: #fff;
+  gap: 12px;
+  letter-spacing: 6px;
+}
+.login .inputPanel .inputContainer .title {
+  display: flex;
+  gap: 3px;
+}
+.login .inputPanel .inputContainer input {
+  width: 100%;
+}
+.login .inputPanel .buttonContainer {
+  display: flex;
+  gap: 12px;
+}
+.login .inputPanel .buttonContainer button {
+  width: 100%;
+}
+
+::-moz-placeholder {
+  /* CSS 3 標準 */
+  color: #eee;
+}
+
+::placeholder {
+  /* CSS 3 標準 */
+  color: #eee;
+}
+
+::-webkit-input-placeholder {
+  /* Chrome, Safari */
+  color: #eee;
+}
+
+:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #eee;
+}
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #eee;
+  opacity: 1;
+}/*# sourceMappingURL=App.css.map */
