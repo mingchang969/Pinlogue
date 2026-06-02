@@ -18,7 +18,7 @@ function ListPanel({ mode, currentMap, markers, trips, tags, filterTag, setFilte
                         <div className="pictureContainer">
                             <div className="visualCoverFrame">
                                 <CroppedImage
-                                    imageUrl={currentMap?.imageUrl || "/assets/ex_picture.png"}
+                                    imageUrl={currentMap?.imageUrl}
                                     cropData={currentMap?.cropData}
                                     alt={currentMap?.title}
                                     className="visualCoverImage"

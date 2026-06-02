@@ -11,7 +11,7 @@ function MobileHeader({ currentMap, navigate, VIEW, setView, setIsMapInfo, expan
                         <div className="pictureContainer">
                             <div className="visualCoverFrame">
                                 <CroppedImage
-                                    imageUrl={currentMap?.imageUrl || "/assets/ex_picture.png"}
+                                    imageUrl={currentMap?.imageUrl}
                                     cropData={currentMap?.cropData}
                                     alt={currentMap?.title}
                                     className="visualCoverImage"

@@ -2,6 +2,10 @@
   margin: 0;
 }
 
+body {
+  background-color: #131c21;
+}
+
 $breakpoint-mi: 386px;
 $breakpoint-sm: 768px;
 $breakpoint-lg: 1025px;
@@ -51,6 +55,11 @@ input {
   border: solid 1px #fff;
   border-radius: 8px;
   transition: all 0.2s ease;
+  font-size: 16px;
+
+  @include respond(sm) {
+    font-size: unset;
+  }
 
   &:hover {
     border: 1px solid #ccc;
@@ -71,6 +80,11 @@ textarea {
   border-radius: 8px;
   transition: all 0.2s ease;
   resize: none;
+  font-size: 16px;
+
+  @include respond(sm) {
+    font-size: unset;
+  }
 
   &:hover {
     border: 1px solid #ccc;
@@ -1214,8 +1228,9 @@ textarea {
         border-radius: 18px;
 
         .picture {
+          width: 15%;
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
           padding: 6px;
           box-sizing: border-box;
@@ -1251,9 +1266,11 @@ textarea {
 
         .button {
           display: flex;
-          justify-content: center;
+          justify-content: flex-end;
           align-items: center;
           width: 15%;
+          padding: 6px;
+          box-sizing: border-box;
           cursor: pointer;
           // border: dashed 1px rgb(255, 59, 255);
         }
@@ -2043,11 +2060,6 @@ textarea {
             border-radius: 12px;
             transition: all 0.2s ease;
             cursor: pointer;
-
-            &:hover {
-              border: solid 1px rgba($color: #bec94a, $alpha: 0.6);
-              background-color: rgba($color: #bec94a, $alpha: 0.05);
-            }
 
             .pictureContainer {
               width: 66px;
@@ -2842,9 +2854,11 @@ textarea {
             transition: all 0.2s ease;
             cursor: pointer;
 
-            &:hover {
-              border: solid 1px rgba($color: #bec94a, $alpha: 0.6);
-              background-color: rgba($color: #bec94a, $alpha: 0.05);
+            @include respond(sm) {
+              &:hover {
+                border: solid 1px rgba($color: #bec94a, $alpha: 0.6);
+                background-color: rgba($color: #bec94a, $alpha: 0.05);
+              }
             }
 
             .pictureContainer {
@@ -3089,7 +3103,7 @@ textarea {
       flex-direction: column;
       align-items: center;
       width: 100%;
-      font-size: 14px;
+      font-size: 16px;
       color: #fff;
       gap: 12px;
       letter-spacing: 6px;
