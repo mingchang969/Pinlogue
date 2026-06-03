@@ -2931,7 +2931,7 @@ textarea {
 
               .contextContainer {
                 width: 100%;
-                height: 33px;
+                height: 38px;
                 color: rgba($color: #fff, $alpha: 0.7);
                 font-size: 14px;
                 letter-spacing: 2px;
@@ -2939,6 +2939,7 @@ textarea {
                 overflow: hidden;
 
                 @include respond(sm) {
+                  height: 33px;
                   font-size: 12px;
                 }
               }

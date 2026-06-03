@@ -36,6 +36,7 @@ export const transportOptions = [
   { value: "train", text: "火車" },
   { value: "HSR", text: "高鐵" },
   { value: "taxi", text: "計程車" },
+  { value: "airplane", text: "飛機" },
 ];
 
 export const amenityOptions = [

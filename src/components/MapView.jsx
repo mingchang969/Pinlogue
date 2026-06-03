@@ -271,8 +271,15 @@ function MapView({
             } else {
                 const bounds = L.latLngBounds(points);
                 map.flyToBounds(bounds, {
-                    paddingTopLeft: [240, 120],
-                    paddingBottomRight: [240, 120],
+                    paddingTopLeft:
+                        isMobile
+                            ? [24, 24]
+                            : [240, 120],
+
+                    paddingBottomRight:
+                        isMobile
+                            ? [24, 240]
+                            : [360, 120],
                     maxZoom: 14,
                     animate: true,
                     duration: 1.5,
@@ -639,7 +646,9 @@ out center 50;
 
     //// 新增行程
     async function addTrip() {
-        if (!trip.title.trim() && !trip.days.every(day => day.places.length > 0 && day.places.every(p => (p.startTime && p.endTime) || p.transportType))) {
+        if (!trip.title.trim() && !trip.days.every(day => day.places.length > 0
+            // && day.places.every(p => (p.startTime && p.endTime) || p.transportType)
+        )) {
             alert("請完整添加標題、標籤、描述、行程");
             return;
         }
@@ -1533,8 +1542,8 @@ out center 50;
                                                         onClick={() => { if (isUploading) return; addTrip(); }}
                                                         className={`buttonFinish ${trip.title.trim() &&
                                                             trip.days.every(day =>
-                                                                day.places.length > 0 &&
-                                                                day.places.every(p => (p.startTime && p.endTime) || p.transportType)
+                                                                day.places.length > 0
+                                                                // &&day.places.every(p => (p.startTime && p.endTime) || p.transportType)
                                                             ) && !isUploading
                                                             ? ""
                                                             : "disable"

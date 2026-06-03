@@ -105,7 +105,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
 
     // 編輯地標
     async function editMarker(markerId) {
-        if (!editTitle.trim() || !editIntro.trim() || !editTag) return;
+        if (!editTitle.trim() ) return;
 
         try {
             const oldImageKey = selectedMarker?.imageKey || "";
