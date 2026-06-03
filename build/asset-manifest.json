@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.b6443c9a.css",
-    "main.js": "/static/js/main.f06b2e1e.js",
+    "main.css": "/static/css/main.a9610814.css",
+    "main.js": "/static/js/main.2992d978.js",
     "static/media/bootstrap-icons.woff?": "/static/media/bootstrap-icons.1295669cd4e305c97f2c.woff",
     "static/media/bootstrap-icons.woff2?": "/static/media/bootstrap-icons.92ea18a81d737146ff04.woff2",
     "static/media/Logo.svg": "/static/media/Logo.539e6816937699593c2d01ba3ee0d333.svg",
@@ -37,11 +37,11 @@
     "static/media/Check.svg": "/static/media/Check.5199ad9c010fcbbdf7aac5431e0ae0ab.svg",
     "static/media/Arrow.svg": "/static/media/Arrow.e511aeadb63d4a0377dcaaeb30018145.svg",
     "static/media/Flat.svg": "/static/media/Flat.b884613f1ca6207f9455e37ed3c80c84.svg",
-    "main.b6443c9a.css.map": "/static/css/main.b6443c9a.css.map",
-    "main.f06b2e1e.js.map": "/static/js/main.f06b2e1e.js.map"
+    "main.a9610814.css.map": "/static/css/main.a9610814.css.map",
+    "main.2992d978.js.map": "/static/js/main.2992d978.js.map"
   },
   "entrypoints": [
-    "static/css/main.b6443c9a.css",
-    "static/js/main.f06b2e1e.js"
+    "static/css/main.a9610814.css",
+    "static/js/main.2992d978.js"
   ]
 }

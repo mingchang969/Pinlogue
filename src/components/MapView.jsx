@@ -1507,6 +1507,7 @@ out center 50;
                                                                     tags={tags}
                                                                     place={place}
                                                                     placeNumber={placeNumber}
+                                                                    isEdit={true}
                                                                     editTripSelected={editTripSelected}
                                                                     setTrip={setTrip}
                                                                     setEditTripSelected={setEditTripSelected}
@@ -1603,9 +1604,7 @@ out center 50;
                                                                                         <span style={{ color: "#ee9144" }}>時間衝突</span>
                                                                                     ) : place.duration === 0 ? (
                                                                                         <span style={{ color: "#fff" }}>時間太短</span>
-                                                                                    ) : (
-                                                                                        <span style={{ color: "#da4d4d" }}>還未選擇時間</span>
-                                                                                    )}
+                                                                                    ) : null}
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1717,6 +1716,7 @@ out center 50;
                                                                         tags={tags}
                                                                         place={place}
                                                                         placeNumber={placeNumber}
+                                                                        isEdit={true}
                                                                         editTripSelected={editTripSelected}
                                                                         setEditTripSelected={setEditTripSelected}
                                                                         setTrip={setTrip}
@@ -1825,6 +1825,7 @@ out center 50;
                                                                         tags={tags}
                                                                         place={place}
                                                                         placeNumber={placeNumber}
+                                                                        isEdit={true}
                                                                         editTripSelected={editTripSelected}
                                                                         setEditTripSelected={setEditTripSelected}
                                                                         setTrip={setTrip}

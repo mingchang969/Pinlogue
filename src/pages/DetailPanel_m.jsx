@@ -125,9 +125,7 @@ function DetailPanel_m({ currentUser, tag, selectedMarker, selectedTrip, mode, o
                                                                 <span style={{ color: "#ee9144" }}>時間衝突</span>
                                                             ) : place.duration === 0 ? (
                                                                 <span style={{ color: "#fff" }}>時間太短</span>
-                                                            ) : (
-                                                                <span style={{ color: "#da4d4d" }}>還未選擇時間</span>
-                                                            )}
+                                                            ) : null}
                                                         </div>
                                                     </div>
                                                 </div>
