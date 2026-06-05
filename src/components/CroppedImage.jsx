@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getCroppedImg } from "../utils/cropImage";
 
 function CroppedImage({
@@ -10,55 +10,45 @@ function CroppedImage({
   const [displayUrl, setDisplayUrl] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const requestIdRef = useRef(0);
+
   useEffect(() => {
-    let active = true;
-    let objectUrlToClean = null;
+    let cancelled = false;
 
-    async function buildImage() {
+    async function run() {
+      if (!imageUrl) return;
+
       setLoading(true);
-      setDisplayUrl(null);
 
-      if (!imageUrl) {
+      const pixels = cropData?.croppedAreaPixels;
+
+      if (!pixels) {
+        setDisplayUrl(imageUrl);
         setLoading(false);
         return;
       }
 
-      try {
+      const url = await getCroppedImg(imageUrl, pixels);
 
-        const finalUrl = cropData?.croppedAreaPixels
-          ? await getCroppedImg(imageUrl, cropData.croppedAreaPixels)
-          : imageUrl;
+      if (cancelled) return;
 
-        if (cropData?.croppedAreaPixels) {
-          objectUrlToClean = finalUrl;
-        }
-
-        if (active) {
-          setDisplayUrl(finalUrl);
-        }
-      } catch (err) {
-        console.error("裁切預覽失敗:", err);
-
-        if (active) {
-          setDisplayUrl(imageUrl);
-        }
-      }
+      setDisplayUrl(url);
+      setLoading(false);
     }
 
-    buildImage();
+    run();
 
     return () => {
-      active = false;
-      if (objectUrlToClean) {
-        URL.revokeObjectURL(objectUrlToClean);
-      }
+      cancelled = true;
     };
   }, [imageUrl, cropData]);
 
   if (!displayUrl || loading) {
-    <div className="croppedImageWrapper">
-      <div className="imagePlaceholder"></div>
-    </div>
+    return (
+      <div className="croppedImageWrapper">
+        <div className="imagePlaceholder"></div>
+      </div>
+    );
   }
 
   return (

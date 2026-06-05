@@ -583,7 +583,7 @@ out center 50;
     //// 新增地標
     async function addMarker(lat, lng) {
         if (!title.trim()) {
-            alert("請完整填寫標題、標籤、描述");
+            alert("請至少填寫標題");
             return;
         }
 
@@ -649,7 +649,7 @@ out center 50;
         if (!trip.title.trim() && !trip.days.every(day => day.places.length > 0
             // && day.places.every(p => (p.startTime && p.endTime) || p.transportType)
         )) {
-            alert("請完整添加標題、標籤、描述、行程");
+            alert("請至少添加標題、行程");
             return;
         }
 
@@ -1924,8 +1924,9 @@ out center 50;
                                         fileInputRef.current.click();
                                     }}>
                                         <Picture className="icon" />
-                                        {file && <VisualCover image={croppedPreviewUrl} />}
-
+                                        <div className="visualCoverFrame">
+                                            {file && <VisualCover image={croppedPreviewUrl} />}
+                                        </div>
                                         <input type="file" name="file" ref={fileInputRef} onChange={(e) => {
                                             const selectedFile = e.target.files[0];
                                             if (!selectedFile) return;
@@ -2009,8 +2010,9 @@ out center 50;
                                                 fileInputRef.current.click();
                                             }}>
                                                 <Picture className="icon" />
-                                                {file && <VisualCover image={croppedPreviewUrl} />}
-
+                                                <div className="visualCoverFrame">
+                                                    {file && <VisualCover image={croppedPreviewUrl} />}
+                                                </div>
                                                 <input type="file" name="file" ref={fileInputRef} onChange={(e) => {
                                                     const selectedFile = e.target.files[0];
                                                     if (!selectedFile) return;

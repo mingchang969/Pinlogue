@@ -49,10 +49,9 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
     const [uploadError, setUploadError] = useState("");
 
     const [showCropModal, setShowCropModal] = useState(false); // 裁切面板狀態
-    const [cropData, setCropData] = useState({ // 裁切參數
-        crop: { x: 0, y: 0 },
-        zoom: 1,
-    });
+
+    const cropDataRef = useRef(null);
+
     const [croppedPreviewUrl, setCroppedPreviewUrl] = useState(""); // 裁切後的本地預覽圖
     const [editCropSource, setEditCropSource] = useState(""); // 舊圖裁切時的來源網址
 
@@ -61,7 +60,8 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
     const tag = tags.find((o) => o.id === (mode === "pinListMode" ? selectedMarker?.markerTag : selectedTrip?.tag) || null);
 
     useEffect(() => {
-        resetImageState();
+
+        // resetImageState();
         if (isMapInfo) {
             setEditTitle(currentMap.title || "");
             setEditIntro(currentMap.intro || "");
@@ -92,7 +92,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                 },]
             });
         }
-    }, [isMapInfo, selectedMarker, selectedTrip]);
+    }, [isMapInfo, selected]);
 
     // 上傳預覽圖
     const [previewUrl, setPreviewUrl] = useState(null);
@@ -105,7 +105,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
 
     // 編輯地標
     async function editMarker(markerId) {
-        if (!editTitle.trim() ) return;
+        if (!editTitle.trim()) return;
 
         try {
             const oldImageKey = selectedMarker?.imageKey || "";
@@ -133,22 +133,26 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                     setUploadStatus("");
                 }
             }
-
+            console.log("SAVE CHECK", {
+                imageUrl: nextImageUrl,
+                cropData: cropDataRef.current,
+            });
             await updateDoc(markerDocRef(mapId, markerId), {
                 title: editTitle,
                 intro: editIntro,
                 markerTag: editTag,
                 imageUrl: nextImageUrl,
                 imageKey: nextImageKey,
-                cropData: croppedPreviewUrl ? cropData : (selectedMarker?.cropData || cropData),
+                cropData:
+                    cropDataRef.current ?? selectedMarker?.cropData,
                 updatedAt: new Date(),
             });
 
-            setIsEdit(false);
-            setEditTitle("");
-            setEditIntro("");
-            setEditTag("");
-            resetImageState();
+            // setIsEdit(false);
+            // setEditTitle("");
+            // setEditIntro("");
+            // setEditTag("");
+            // resetImageState();
 
         } catch (err) {
             console.error(err);
@@ -220,20 +224,21 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                 days: trip.days,
                 imageUrl: nextImageUrl,
                 imageKey: nextImageKey,
-                cropData: croppedPreviewUrl ? cropData : (selectedTrip?.cropData || cropData),
+                cropData:
+                    cropDataRef.current ?? selectedTrip?.cropData,
                 updatedAt: new Date(),
             });
 
             setIsEdit(false);
-            setTrip({
-                title: "",
-                intro: "",
-                tag: "",
-                imageUrl: "",
-                days: [{ places: [] }],
-            });
+            // setTrip({
+            //     title: "",
+            //     intro: "",
+            //     tag: "",
+            //     imageUrl: "",
+            //     days: [{ places: [] }],
+            // });
             setEditTripSelected(null);
-            resetImageState();
+            // resetImageState();
 
         } catch (err) {
             console.error(err);
@@ -307,15 +312,16 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                 intro: editIntro,
                 imageUrl: nextImageUrl,
                 imageKey: nextImageKey,
-                cropData: croppedPreviewUrl ? cropData : (currentMap?.cropData || cropData),
+                cropData:
+                    cropDataRef.current ?? currentMap?.cropData,
                 updatedAt: new Date(),
             });
 
-            setIsEdit(false);
-            setEditTitle("");
-            setEditIntro("");
-            setEditTag("");
-            resetImageState();
+            // setIsEdit(false);
+            // setEditTitle("");
+            // setEditIntro("");
+            // setEditTag("");
+            // resetImageState();
 
         } catch (err) {
             console.error(err);
@@ -388,10 +394,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
         setPreviewUrl(null);
         setCroppedPreviewUrl("");
         setEditCropSource("");
-        setCropData({
-            crop: { x: 0, y: 0 },
-            zoom: 1,
-        });
+        cropDataRef.current = null;
     }
 
     function renderPanel() {
@@ -487,10 +490,8 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                         setUploadError("");
                         setFile(selectedFile);
                         setCroppedPreviewUrl("");
-                        setCropData({
-                            crop: { x: 0, y: 0 },
-                            zoom: 1,
-                        });
+
+                        cropDataRef.current = null;
                         setShowCropModal(true);
 
                         e.target.value = null;
@@ -502,46 +503,41 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
 
                         setEditCropSource(source);
 
-                        setCropData(
-                            file
-                                ? cropData
-                                : selectedItem?.cropData || {
-                                    crop: { x: 0, y: 0 },
-                                    zoom: 1,
-                                }
-                        );
+                        const nextCrop =
+                            cropDataRef.current ??
+                            selectedItem?.cropData ??
+                            undefined;
 
+                        cropDataRef.current = nextCrop;
                         setShowCropModal(true);
                     }}
                     onCancel={() => {
                         setIsEdit(false);
-                        resetImageState();
-
                         setUploadError("");
                         if (isMapInfo) {
-                            setEditTitle("");
-                            setEditIntro("");
-                            setEditTag("");
+                            // setEditTitle("");
+                            // setEditIntro("");
+                            // setEditTag("");
                             setView(VIEW.MAP_INFO);
                         } else {
-                            if (mode === "pinListMode") {
-                                setEditTitle("");
-                                setEditIntro("");
-                                setEditTag("");
-                            }
-                            else {
-                                setEditTripSelected("");
-                                setSelectedDay(1);
-                                setTrip({
-                                    title: "",
-                                    intro: "",
-                                    tag: "",
-                                    imageUrl: "",
-                                    days: [{
-                                        places: []
-                                    },]
-                                });
-                            }
+                            // if (mode === "pinListMode") {
+                            //     setEditTitle("");
+                            //     setEditIntro("");
+                            //     setEditTag("");
+                            // }
+                            // else {
+                            //     setEditTripSelected("");
+                            //     setSelectedDay(1);
+                            //     setTrip({
+                            //         title: "",
+                            //         intro: "",
+                            //         tag: "",
+                            //         imageUrl: "",
+                            //         days: [{
+                            //             places: []
+                            //         },]
+                            //     });
+                            // }
                             setView(VIEW.DETAIL);
                         }
                     }}
@@ -560,8 +556,6 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                             }
                             if (!uploadError) setView(VIEW.DETAIL);
                         }
-
-
                     }
                     }
                     onDelete={() => {
@@ -588,17 +582,20 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
         <>
             {showCropModal && (previewUrl || editCropSource) && (
                 <ImageCropModal
+                    key={previewUrl || editCropSource}
                     image={previewUrl || editCropSource}
-                    initialCropData={cropData}
+                    initialCropData={cropDataRef.current}
                     onCancel={() => setShowCropModal(false)}
                     onSave={async (data) => {
                         const source = previewUrl || editCropSource;
 
-                        setCropData({
+                        const nextCropData = {
                             crop: data.crop,
                             zoom: data.zoom,
                             croppedAreaPixels: data.croppedAreaPixels,
-                        });
+                        }
+
+                        cropDataRef.current = nextCropData
 
                         const croppedImg = await getCroppedImg(
                             source,
