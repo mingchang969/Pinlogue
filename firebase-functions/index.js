@@ -557,6 +557,147 @@ try{
 
 }
 
+<<<<<<< HEAD
+=======
+});
+
+
+
+exports.updateMapsRankingAuto =
+onSchedule(
+{
+ schedule:
+ "every 6 hours",
+
+ timeZone:
+ "Asia/Taipei",
+
+},
+async()=>{
+
+ try{
+
+ await updateAllMapRankings();
+
+ }catch(err){
+
+ console.error(
+ err,
+ );
+
+ }
+
+}
+);
+
+
+
+/*
+|--------------------------------------------------------------------------
+| getImageKeys
+|--------------------------------------------------------------------------
+*/
+
+exports.getImageKeys =
+functions.https.onRequest(
+async(req,res)=>{
+
+try{
+
+ const mapsSnap=
+ await db
+ .collection("maps")
+ .get();
+
+ const keys=[];
+
+ for(
+ const mapDoc
+ of mapsSnap.docs
+ ){
+
+ const markerSnap=
+
+ await mapDoc.ref
+ .collection(
+ "markers",
+ )
+ .get();
+
+ const tripSnap=
+
+ await mapDoc.ref
+ .collection(
+ "trips",
+ )
+ .get();
+
+ markerSnap.forEach(
+ doc=>{
+
+ const data=
+ doc.data();
+
+ if(
+ data.imageKey
+ ){
+
+ keys.push(
+ data.imageKey,
+ );
+
+ }
+
+ });
+
+ tripSnap.forEach(
+ doc=>{
+
+ const data=
+ doc.data();
+
+ if(
+ data.imageKey
+ ){
+
+ keys.push(
+ data.imageKey,
+ );
+
+ }
+
+ });
+
+ }
+
+ res.json({
+
+ ok:true,
+
+ keys,
+
+ });
+
+}catch(err){
+
+ console.error(
+ err,
+ );
+
+ res
+ .status(500)
+ .json({
+
+ ok:false,
+
+ error:
+ err.message,
+
+ });
+
+}
+
+>>>>>>> 4000841
 });
 
 

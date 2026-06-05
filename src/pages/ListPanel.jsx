@@ -144,3 +144,4 @@ function ListPanel({ mode, currentMap, markers, trips, tags, filterTag, setFilte
 }
 
 export default ListPanel
+
