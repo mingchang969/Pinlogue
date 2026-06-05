@@ -271,8 +271,15 @@ function MapView({
             } else {
                 const bounds = L.latLngBounds(points);
                 map.flyToBounds(bounds, {
-                    paddingTopLeft: [240, 120],
-                    paddingBottomRight: [240, 120],
+                    paddingTopLeft:
+                        isMobile
+                            ? [24, 24]
+                            : [240, 120],
+
+                    paddingBottomRight:
+                        isMobile
+                            ? [24, 240]
+                            : [360, 120],
                     maxZoom: 14,
                     animate: true,
                     duration: 1.5,
@@ -576,7 +583,7 @@ out center 50;
     //// 新增地標
     async function addMarker(lat, lng) {
         if (!title.trim()) {
-            alert("請完整填寫標題、標籤、描述");
+            alert("請至少填寫標題");
             return;
         }
 
@@ -639,8 +646,10 @@ out center 50;
 
     //// 新增行程
     async function addTrip() {
-        if (!trip.title.trim() && !trip.days.every(day => day.places.length > 0 && day.places.every(p => (p.startTime && p.endTime) || p.transportType))) {
-            alert("請完整添加標題、標籤、描述、行程");
+        if (!trip.title.trim() && !trip.days.every(day => day.places.length > 0
+            // && day.places.every(p => (p.startTime && p.endTime) || p.transportType)
+        )) {
+            alert("請至少添加標題、行程");
             return;
         }
 
@@ -1498,6 +1507,7 @@ out center 50;
                                                                     tags={tags}
                                                                     place={place}
                                                                     placeNumber={placeNumber}
+                                                                    isEdit={true}
                                                                     editTripSelected={editTripSelected}
                                                                     setTrip={setTrip}
                                                                     setEditTripSelected={setEditTripSelected}
@@ -1533,8 +1543,8 @@ out center 50;
                                                         onClick={() => { if (isUploading) return; addTrip(); }}
                                                         className={`buttonFinish ${trip.title.trim() &&
                                                             trip.days.every(day =>
-                                                                day.places.length > 0 &&
-                                                                day.places.every(p => (p.startTime && p.endTime) || p.transportType)
+                                                                day.places.length > 0
+                                                                // &&day.places.every(p => (p.startTime && p.endTime) || p.transportType)
                                                             ) && !isUploading
                                                             ? ""
                                                             : "disable"
@@ -1594,9 +1604,7 @@ out center 50;
                                                                                         <span style={{ color: "#ee9144" }}>時間衝突</span>
                                                                                     ) : place.duration === 0 ? (
                                                                                         <span style={{ color: "#fff" }}>時間太短</span>
-                                                                                    ) : (
-                                                                                        <span style={{ color: "#da4d4d" }}>還未選擇時間</span>
-                                                                                    )}
+                                                                                    ) : null}
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1708,6 +1716,7 @@ out center 50;
                                                                         tags={tags}
                                                                         place={place}
                                                                         placeNumber={placeNumber}
+                                                                        isEdit={true}
                                                                         editTripSelected={editTripSelected}
                                                                         setEditTripSelected={setEditTripSelected}
                                                                         setTrip={setTrip}
@@ -1816,6 +1825,7 @@ out center 50;
                                                                         tags={tags}
                                                                         place={place}
                                                                         placeNumber={placeNumber}
+                                                                        isEdit={true}
                                                                         editTripSelected={editTripSelected}
                                                                         setEditTripSelected={setEditTripSelected}
                                                                         setTrip={setTrip}
@@ -1914,8 +1924,9 @@ out center 50;
                                         fileInputRef.current.click();
                                     }}>
                                         <Picture className="icon" />
-                                        {file && <VisualCover image={croppedPreviewUrl} />}
-
+                                        <div className="visualCoverFrame">
+                                            {file && <VisualCover image={croppedPreviewUrl} />}
+                                        </div>
                                         <input type="file" name="file" ref={fileInputRef} onChange={(e) => {
                                             const selectedFile = e.target.files[0];
                                             if (!selectedFile) return;
@@ -1999,8 +2010,9 @@ out center 50;
                                                 fileInputRef.current.click();
                                             }}>
                                                 <Picture className="icon" />
-                                                {file && <VisualCover image={croppedPreviewUrl} />}
-
+                                                <div className="visualCoverFrame">
+                                                    {file && <VisualCover image={croppedPreviewUrl} />}
+                                                </div>
                                                 <input type="file" name="file" ref={fileInputRef} onChange={(e) => {
                                                     const selectedFile = e.target.files[0];
                                                     if (!selectedFile) return;

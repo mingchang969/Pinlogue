@@ -3,7 +3,7 @@ import TimePicker from './TimePicker';
 import CroppedImage from './CroppedImage';
 import { ReactComponent as Cross } from "../images/Cross.svg"
 
-function TripItem({ markers, tags, place, placeNumber, onClick, editTripSelected, setEditTripSelected, setTrip, selectedDay, scrollContainer }) {
+function TripItem({ markers, tags, place, placeNumber, onClick, editTripSelected, setEditTripSelected, setTrip, selectedDay, scrollContainer, isEdit = false }) {
 
     const [showStartPicker, setShowStartPicker] = useState(false);
     const [showEndPicker, setShowEndPicker] = useState(false);
@@ -221,113 +221,122 @@ function TripItem({ markers, tags, place, placeNumber, onClick, editTripSelected
                 </div>
             </div>
             <div className="infoContainer">
-                <div className="timeBar"
-                    ref={startRef}
-                    style={{
-                        backgroundColor: isSelected ? "transparent" : tag?.color,
-                        borderColor: tag?.color
-                    }}
-                    onClick={(e) => {
-                        if (isSelected) e.stopPropagation();
-                        updatePosition();
-                        setShowStartPicker((prev) => !prev);
-                        setShowEndPicker(false);
-                    }}
-                >
-                    {place.startTime || (isSelected ? "選擇時間" : "未選擇")}
+                {(isEdit || (!isEdit && place.startTime)) &&
+                    <div className="timeBar"
+                        ref={startRef}
+                        style={{
+                            backgroundColor: isSelected ? "transparent" : tag?.color,
+                            borderColor: tag?.color
+                        }}
+                        onClick={(e) => {
+                            if (isSelected) e.stopPropagation();
+                            updatePosition();
+                            setShowStartPicker((prev) => !prev);
+                            setShowEndPicker(false);
+                        }}
+                    >
+                        {place.startTime || (isSelected ? "選擇時間" : "未選擇")}
 
-                    {isSelected && showStartPicker && (
-                        <TimePicker
-                            position={position}
-                            initialTime={place.startTime}
-                            minTime={null}
-                            maxTime={place.endTime}
-                            onSelect={(time) => {
+                        {isSelected && showStartPicker && (
+                            <TimePicker
+                                position={position}
+                                initialTime={place.startTime}
+                                minTime={null}
+                                maxTime={place.endTime}
+                                onSelect={(time) => {
 
-                                setTrip(prev => ({
-                                    ...prev,
-                                    days: prev.days.map((day, i) => {
-                                        if (i !== selectedDay - 1) return day;
+                                    setTrip(prev => ({
+                                        ...prev,
+                                        days: prev.days.map((day, i) => {
+                                            if (i !== selectedDay - 1) return day;
 
-                                        const updatedDay = {
-                                            ...day,
-                                            places: day.places.map(p =>
-                                                p.id === place.id
-                                                    ? { ...p, startTime: time }
-                                                    : p
-                                            )
-                                        };
+                                            const updatedDay = {
+                                                ...day,
+                                                places: day.places.map(p =>
+                                                    p.id === place.id
+                                                        ? { ...p, startTime: time }
+                                                        : p
+                                                )
+                                            };
 
-                                        return {
-                                            ...updatedDay,
-                                            places: updateTransport(updatedDay)
-                                        };
-                                    })
-                                }));
-                            }}
-                        />
-                    )}
-                </div>
+                                            return {
+                                                ...updatedDay,
+                                                places: updateTransport(updatedDay)
+                                            };
+                                        })
+                                    }));
+                                }}
+                            />
+                        )}
+                    </div>
+                }
                 <div className="mainBar">
                     <div className="info">
                         <div className="title">
                             <i style={{ color: tag?.color }} className={tag?.icon || "bi bi-question-diamond-fill"}></i>
                             <span className="word-break">{marker?.title}</span>
                         </div>
-                        <div className="time">
-                            {
-                                formatDuration(getDuration(place.startTime, place.endTime))
-                            }
-                        </div>
+                        {(isEdit || (!isEdit && place.startTime && place.endTime)) &&
+                            <div className="time">
+                                {
+                                    formatDuration(getDuration(place.startTime, place.endTime))
+                                }
+                            </div>
+                        }
+
                     </div>
                 </div>
-                <div className="timeBar"
-                    ref={endRef}
-                    style={{
-                        backgroundColor: isSelected ? "transparent" : tag?.color,
-                        borderColor: tag?.color
-                    }}
-                    onClick={(e) => {
-                        if (isSelected) e.stopPropagation();
-                        updatePosition();
-                        setShowEndPicker((prev) => !prev);
-                        setShowStartPicker(false);
-                    }}
-                >
-                    {place.endTime || (isSelected ? "選擇時間" : "未選擇")}
 
-                    {isSelected && showEndPicker && (
-                        <TimePicker
-                            position={position}
-                            initialTime={place.endTime}
-                            minTime={place.startTime}
-                            maxTime={null}
-                            onSelect={(time) => {
+                {(isEdit || (!isEdit && place.endTime)) &&
+                    <div className="timeBar"
+                        ref={endRef}
+                        style={{
+                            backgroundColor: isSelected ? "transparent" : tag?.color,
+                            borderColor: tag?.color
+                        }}
+                        onClick={(e) => {
+                            if (isSelected) e.stopPropagation();
+                            updatePosition();
+                            setShowEndPicker((prev) => !prev);
+                            setShowStartPicker(false);
+                        }}
+                    >
+                        {place.endTime || (isSelected ? "選擇時間" : "未選擇")}
 
-                                setTrip(prev => ({
-                                    ...prev,
-                                    days: prev.days.map((day, i) => {
-                                        if (i !== selectedDay - 1) return day;
+                        {isSelected && showEndPicker && (
+                            <TimePicker
+                                position={position}
+                                initialTime={place.endTime}
+                                minTime={place.startTime}
+                                maxTime={null}
+                                onSelect={(time) => {
 
-                                        const updatedDay = {
-                                            ...day,
-                                            places: day.places.map(p =>
-                                                p.id === place.id
-                                                    ? { ...p, endTime: time }
-                                                    : p
-                                            )
-                                        };
+                                    setTrip(prev => ({
+                                        ...prev,
+                                        days: prev.days.map((day, i) => {
+                                            if (i !== selectedDay - 1) return day;
 
-                                        return {
-                                            ...updatedDay,
-                                            places: updateTransport(updatedDay)
-                                        };
-                                    })
-                                }));
-                            }}
-                        />
-                    )}
-                </div>
+                                            const updatedDay = {
+                                                ...day,
+                                                places: day.places.map(p =>
+                                                    p.id === place.id
+                                                        ? { ...p, endTime: time }
+                                                        : p
+                                                )
+                                            };
+
+                                            return {
+                                                ...updatedDay,
+                                                places: updateTransport(updatedDay)
+                                            };
+                                        })
+                                    }));
+                                }}
+                            />
+                        )}
+                    </div>
+                }
+
             </div>
         </div >
 

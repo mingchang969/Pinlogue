@@ -19,7 +19,6 @@ function ListPanel_m({ mode, currentMap, markers, trips, tags, filterTag, setFil
                         filterTag ?
                             markers.filter(marker => marker.markerTag === filterTag).slice(0, 200).map((marker) => {
                                 const tagId = marker.markerTag;
-                                if (!tagId) return;
                                 const tag = tags.find((o) => o.id === tagId) || null
                                 return (
                                     <PinListItem key={marker.id} data={marker} tag={tag}
@@ -30,7 +29,6 @@ function ListPanel_m({ mode, currentMap, markers, trips, tags, filterTag, setFil
                             :
                             markers.slice(0, 200).map((marker) => {
                                 const tagId = marker.markerTag;
-                                if (!tagId) return;
                                 const tag = tags.find((o) => o.id === tagId) || null
                                 return (
                                     <PinListItem key={marker.id} data={marker} tag={tag}
@@ -43,7 +41,6 @@ function ListPanel_m({ mode, currentMap, markers, trips, tags, filterTag, setFil
                         filterTag ?
                             markers.filter(marker => marker.markerTag === filterTag).slice(0, 200).map((marker) => {
                                 const tagId = marker.markerTag;
-                                if (!tagId) return;
                                 const tag = tags.find((o) => o.id === tagId) || null
                                 return (
                                     <PinListItem key={marker.id} id={marker.id} data={marker} tag={tag}
@@ -61,7 +58,6 @@ function ListPanel_m({ mode, currentMap, markers, trips, tags, filterTag, setFil
                             :
                             markers.slice(0, 200).map((marker) => {
                                 const tagId = marker.markerTag;
-                                if (!tagId) return;
                                 const tag = tags.find((o) => o.id === tagId) || null
                                 return (
                                     <PinListItem key={marker.id} id={marker.id} data={marker} tag={tag}
@@ -78,7 +74,6 @@ function ListPanel_m({ mode, currentMap, markers, trips, tags, filterTag, setFil
                         : filterTag ?
                             trips.filter(trip => trip.tag === filterTag).slice(0, 200).map((trip) => {
                                 const tagId = trip.tag;
-                                if (!tagId) return;
                                 const tag = tags.find((o) => o.id === tagId) || null
                                 return (
                                     <PinListItem key={trip.id} id={trip.id} data={trip} tag={tag} hasDayTag={true}
@@ -90,7 +85,6 @@ function ListPanel_m({ mode, currentMap, markers, trips, tags, filterTag, setFil
                             :
                             trips.slice(0, 200).map((trip) => {
                                 const tagId = trip.tag;
-                                if (!tagId) return;
                                 const tag = tags.find((o) => o.id === tagId) || null
                                 return (
                                     <PinListItem key={trip.id} id={trip.id} data={trip} tag={tag} hasDayTag={true}
@@ -105,3 +99,4 @@ function ListPanel_m({ mode, currentMap, markers, trips, tags, filterTag, setFil
 }
 
 export default ListPanel_m
+

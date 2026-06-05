@@ -60,12 +60,10 @@ function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mod
     // 📌 控制「只能從 drag bar 拖」
     const dragControls = useDragControls();
 
-    const [contentHeight, setContentHeight] = useState(window.innerHeight - sheetPosition)
+    const contentHeight = window.innerHeight - sheetPosition;
 
     // 📌 觸發展合Sheet
     function snapSheet(targetY) {
-
-        setContentHeight(window.innerHeight - targetY);
 
         animate(y, targetY, {
             type: "spring",
@@ -77,7 +75,7 @@ function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mod
     // 📌 當sheetPosition變化，觸發展合Sheet
     useEffect(() => {
 
-        if (y.get() === sheetPosition) return;
+        if (Math.abs(y.get() - sheetPosition) < 1) return;
         snapSheet(sheetPosition);
 
     }, [sheetPosition])
@@ -109,6 +107,8 @@ function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mod
                 closest = point;
             }
         });
+
+        snapSheet(closest);
         setSheetPosition(closest);
     }
 
