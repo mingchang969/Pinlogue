@@ -7,8 +7,8 @@ import TripItem from '../components/TripItem'
 
 import { transportOptions } from "../config/optionConfig";
 
-function DetailPanel_m({ currentUser, tag, selectedMarker, selectedTrip, mode, onBack, onEdit,
-    markers, tags, trip, scrollRef, selectedDay, setSelectedDay, hasDayTag }) {
+function DetailPanel_m({ mapId, currentUser, tag, selectedMarker, selectedTrip, mode, onBack, onEdit,
+    markers, tags, trip, scrollRef, selectedDay, setSelectedDay, hasDayTag, increaseClick, navigate }) {
 
     // 將 分 轉為 小時和分
     function formatDuration(mins) {
@@ -142,6 +142,10 @@ function DetailPanel_m({ currentUser, tag, selectedMarker, selectedTrip, mode, o
                                                 place={place}
                                                 placeNumber={placeNumber}
                                                 selectedDay={selectedDay}
+                                                onClick={() => {
+                                                    increaseClick(place.markerId, "marker");
+                                                    navigate(`/maps/${mapId}/markers/${place.markerId}`);
+                                                }}
                                             />
                                         );
                                     });

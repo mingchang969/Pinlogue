@@ -526,8 +526,11 @@ function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mod
             return (
                 <DetailPanel_m
                     currentUser={currentUser}
+                    mapId={mapId}
                     hasDayTag={mode !== "pinListMode" ? true : false}
                     tag={tag}
+                    increaseClick={increaseClick}
+                    navigate={navigate}
                     selectedMarker={selectedMarker}
                     selectedTrip={selectedTrip}
                     selectedDay={selectedDay}

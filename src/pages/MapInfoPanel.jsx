@@ -7,20 +7,22 @@ function MapInfoPanel({ currentUser, currentMap, onBack, onEdit }) {
     return (
         <>
             <div className="markerControlContainer">
+                
+                {currentUser &&
+                    <div className="edit" onClick={
+                        onEdit
+                    }><Edit className='button' />
+                    </div>}
+
+                <div className="title word-break">
+                    <span>{currentMap?.title}</span>
+                </div>
                 <div className="return">
                     <div className="button">
                         <Arrow
                             onClick={onBack} />
                     </div>
                 </div>
-                <div className="title word-break">
-                    <span>{currentMap?.title}</span>
-                </div>
-                {currentUser &&
-                    <div className="edit" onClick={
-                        onEdit
-                    }><Edit className='button' />
-                    </div>}
             </div >
             <div className="markerInfoContainer">
                 <div className="info">

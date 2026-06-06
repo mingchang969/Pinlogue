@@ -54,8 +54,8 @@ export async function uploadImage(file, type = "poi", options = {}) {
         throw new Error("圖片太大，請換小一點的圖片");
     }
 
-    console.log("原始大小:", file.size);
-    console.log("壓縮後大小:", uploadFile.size);
+    // console.log("原始大小:", file.size);
+    // console.log("壓縮後大小:", uploadFile.size);
 
     onStatusChange?.("uploading");
 

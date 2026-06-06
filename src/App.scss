@@ -947,9 +947,10 @@ textarea {
     .modeButtonContainer {
       display: flex;
       width: 100%;
-      height: 55px;
+      height: 48px;
       // border: dashed 1px red;
       padding: 0 12px;
+      padding-bottom: 12px;
       box-sizing: border-box;
 
       .buttonContainer {
@@ -2025,12 +2026,12 @@ textarea {
         .listContainer {
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 6px;
           width: 100%;
           min-height: 0;
           height: 100%;
-          padding-top: 6px;
           padding-bottom: 24px;
+          box-sizing: border-box;
 
           overflow-y: auto;
           scrollbar-width: none;
@@ -2274,6 +2275,7 @@ textarea {
             }
 
             .context {
+              flex: 1;
               color: rgba($color: #fff, $alpha: 1);
               font-size: 14px;
               letter-spacing: 2.5px;
@@ -2647,8 +2649,9 @@ textarea {
 
       .modeButtonContainer {
         width: 100%;
-        height: 46px;
+        height: 38px;
         display: flex;
+        margin-bottom: 10px;
         padding: 0 24px;
         box-sizing: border-box;
 
@@ -2822,9 +2825,11 @@ textarea {
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 6px;
           min-height: 0;
           flex: 1;
+          padding-bottom: 12px;
+          box-sizing: border-box;
           overflow-y: auto;
           scrollbar-width: none;
           /* Firefox */
