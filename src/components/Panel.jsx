@@ -61,7 +61,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
 
     useEffect(() => {
 
-        // resetImageState();
+        resetImageState();
         if (isMapInfo) {
             setEditTitle(currentMap.title || "");
             setEditIntro(currentMap.intro || "");
@@ -133,10 +133,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                     setUploadStatus("");
                 }
             }
-            console.log("SAVE CHECK", {
-                imageUrl: nextImageUrl,
-                cropData: cropDataRef.current,
-            });
+
             await updateDoc(markerDocRef(mapId, markerId), {
                 title: editTitle,
                 intro: editIntro,
@@ -317,7 +314,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                 updatedAt: new Date(),
             });
 
-            // setIsEdit(false);
+            setIsEdit(false);
             // setEditTitle("");
             // setEditIntro("");
             // setEditTag("");

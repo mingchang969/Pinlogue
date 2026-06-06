@@ -1,69 +1,28 @@
-export async function compressImage(file, options = {}) {
-    const {
-        maxWidth = 1600,
-        maxHeight = 1600,
-        quality = 0.8,
-        outputType = "image/jpeg",
-    } = options;
+import imageCompression from "browser-image-compression";
 
-    if (!(file instanceof File)) {
-        throw new Error("不是有效的檔案");
-    }
+export async function compressImage(
+  file,
+  options={}
+){
 
-    // SVG 不處理
-    if (file.type === "image/svg+xml") {
-        return file;
-    }
+ const {
+   maxWidth=1600,
+   maxHeight=1600,
+   quality=0.82,
+   outputType="image/webp",
+ } = options;
 
-    // GIF 先不壓，避免動畫壞掉
-    if (file.type === "image/gif") {
-        return file;
-    }
+ const compressed =
+   await imageCompression(file,{
+      maxWidthOrHeight:
+         Math.max(maxWidth,maxHeight),
 
-    const imageBitmap = await createImageBitmap(file);
+      initialQuality:quality,
 
-    let { width, height } = imageBitmap;
+      fileType:outputType,
 
-    const ratio = Math.min(
-        1,
-        maxWidth / width,
-        maxHeight / height,
-    );
+      useWebWorker:true,
+   });
 
-    const targetWidth = Math.round(width * ratio);
-    const targetHeight = Math.round(height * ratio);
-
-    const canvas = document.createElement("canvas");
-    canvas.width = targetWidth;
-    canvas.height = targetHeight;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
-        throw new Error("無法建立 canvas");
-    }
-
-    ctx.drawImage(imageBitmap, 0, 0, targetWidth, targetHeight);
-
-    const blob = await new Promise((resolve, reject) => {
-        canvas.toBlob(
-            (result) => {
-                if (!result) {
-                    reject(new Error("圖片壓縮失敗"));
-                    return;
-                }
-                resolve(result);
-            },
-            outputType,
-            quality,
-        );
-    });
-
-    const ext = outputType === "image/png" ? "png" : "jpg";
-    const safeName = file.name.replace(/\.[^.]+$/, "");
-
-    return new File(
-        [blob],
-        `${safeName}-compressed.${ext}`,
-        { type: outputType },
-    );
+ return compressed;
 }

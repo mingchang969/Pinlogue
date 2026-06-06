@@ -56,22 +56,12 @@ function MapView({
     const fileInputRef = useRef(null);
     const [file, setFile] = useState(null);      // 存使用者選的檔案
 
-    const fileInputRefTrip = useRef(null);
-    const [fileTrip, setFileTrip] = useState(null);      // 存使用者選的檔案 (Trip用)
-
     const [showCropModal, setShowCropModal] = useState(false);
     const [cropData, setCropData] = useState({
         crop: { x: 0, y: 0 },
         zoom: 1,
     });
     const [croppedPreviewUrl, setCroppedPreviewUrl] = useState("");
-
-    const [showCropModalTrip, setShowCropModalTrip] = useState(false);
-    const [cropDataTrip, setCropDataTrip] = useState({
-        crop: { x: 0, y: 0 },
-        zoom: 1,
-    });
-    const [croppedPreviewUrlTrip, setCroppedPreviewUrlTrip] = useState("");
 
     const selectedMarker = markers?.find((m) => m.id === selected);
     const selectedTrip = trips?.find(o => o.id === selected);
@@ -656,11 +646,11 @@ out center 50;
         let uploadedUrl = "";
         let uploadedKey = "";
 
-        if (fileTrip) {
+        if (file) {
             try {
                 setUploadError("");
                 setIsUploading(true);
-                const result = await uploadImage(fileTrip, "trip", {
+                const result = await uploadImage(file, "trip", {
                     onStatusChange: setUploadStatus,
                 });
                 uploadedUrl = result.url;
@@ -678,7 +668,7 @@ out center 50;
             ...trip,
             imageUrl: uploadedUrl,
             imageKey: uploadedKey,
-            cropData: cropDataTrip,
+            cropData: cropData,
         });
 
         await updateDoc(mapDocRef(mapId), {
@@ -699,8 +689,8 @@ out center 50;
                 places: []
             },]
         });
-        setFileTrip(null);
-        setCropDataTrip({
+        setFile(null);
+        setCropData({
             crop: { x: 0, y: 0 },
             zoom: 1,
         });
@@ -716,14 +706,6 @@ out center 50;
         return () => URL.revokeObjectURL(url);
     }, [file]);
 
-    // 上傳預覽圖 (Trip用)
-    const [previewUrlTrip, setPreviewUrlTrip] = useState(null);
-    useEffect(() => {
-        if (!fileTrip) return;
-        const url = URL.createObjectURL(fileTrip);
-        setPreviewUrlTrip(url);
-        return () => URL.revokeObjectURL(url);
-    }, [fileTrip]);
 
     /* --------------------------------------------------
        👉【 Tag 】
@@ -1109,31 +1091,6 @@ out center 50;
                 />
             )}
 
-            {/* 行程 圖片裁切 modal */}
-            {showCropModalTrip && previewUrlTrip && (
-                <ImageCropModal
-                    image={previewUrlTrip}
-                    initialCropData={cropDataTrip}
-                    onCancel={() => setShowCropModalTrip(false)}
-                    onSave={async (data) => {
-                        setCropDataTrip({
-                            crop: data.crop,
-                            zoom: data.zoom,
-                            croppedAreaPixels: data.croppedAreaPixels,
-                        });
-
-                        const croppedImg = await getCroppedImg(
-                            previewUrlTrip,
-                            data.croppedAreaPixels
-                        );
-
-                        setCroppedPreviewUrlTrip(croppedImg);
-
-                        setShowCropModalTrip(false);
-                    }}
-                />
-            )}
-
             <div className="mapContainer">
 
                 <div className="overlayUI"> {/* UI面板 */}
@@ -1391,21 +1348,21 @@ out center 50;
                                     <div className="tripPanel">
                                         <div className="fstStep">
                                             <div className="picture" onClick={() => {
-                                                fileInputRefTrip.current.click();
+                                                fileInputRef.current.click();
                                             }}>
                                                 <Picture className="icon" />
-                                                {fileTrip && <VisualCover image={croppedPreviewUrlTrip} />}
+                                                {file && <VisualCover image={croppedPreviewUrl} />}
 
-                                                <input type="file" name="file" ref={fileInputRefTrip} onChange={(e) => {
+                                                <input type="file" name="file" ref={fileInputRef} onChange={(e) => {
                                                     const selectedFile = e.target.files[0]
                                                     if (!selectedFile) return;
                                                     setUploadError("");
-                                                    setFileTrip(selectedFile);
-                                                    setCropDataTrip({
+                                                    setFile(selectedFile);
+                                                    setCropData({
                                                         crop: { x: 0, y: 0 },
                                                         zoom: 1,
                                                     });
-                                                    setShowCropModalTrip(true);
+                                                    setShowCropModal(true);
 
                                                     e.target.value = null;
                                                 }} style={{ display: "none" }} />

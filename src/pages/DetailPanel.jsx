@@ -4,10 +4,7 @@ import { ReactComponent as Edit } from "../images/Edit.svg"
 import CroppedImage from '../components/CroppedImage'
 
 function DetailPanel({ currentUser, tag, selectedMarker, selectedTrip, mode, onBack, onEdit, trip, hasDayTag }) {
-    console.log("LOAD CHECK", {
-        imageUrl: selectedMarker?.imageUrl,
-        cropData: selectedMarker?.cropData,
-    });
+
     return (
         <>
             <div className="markerControlContainer">
