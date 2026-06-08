@@ -495,7 +495,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
 
                             zoom: 1,
 
-                            croppedAreaPixels: null,
+                            croppedArea: null,
                         };
                         setShowCropModal(true);
 
@@ -594,7 +594,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                         cropDataRef.current || {
                             crop: { x: 0, y: 0 },
                             zoom: 1,
-                            croppedAreaPixels: null,
+                            croppedArea: null,
                         }
                     }
                     onCancel={() => setShowCropModal(false)}

@@ -40,28 +40,28 @@ export async function getCroppedImg(
   const cropX =
 
     image.naturalWidth *
-    croppedArea.x /
+    croppedArea?.x /
     100
 
 
   const cropY =
 
     image.naturalHeight *
-    croppedArea.y /
+    croppedArea?.y /
     100
 
 
   const cropWidth =
 
     image.naturalWidth *
-    croppedArea.width /
+    croppedArea?.width /
     100
 
 
   const cropHeight =
 
     image.naturalHeight *
-    croppedArea.height /
+    croppedArea?.height /
     100
 
 

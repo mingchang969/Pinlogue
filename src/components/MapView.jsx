@@ -1075,13 +1075,13 @@ out center 50;
                         setCropData({
                             crop: data.crop,
                             zoom: data.zoom,
-                            croppedAreaPixels: data.croppedAreaPixels,
+                            croppedArea: data.croppedArea,
                         });
 
                         // 🔥 產生裁切預覽圖
                         const croppedImg = await getCroppedImg(
                             previewUrl,
-                            data.croppedAreaPixels
+                            data.croppedArea
                         );
 
                         setCroppedPreviewUrl(croppedImg);
