@@ -22,41 +22,87 @@ function loadImage(src) {
   });
 }
 
-export async function getCroppedImg(imageSrc, pixelCrop) {
-  const image = await createImage(imageSrc);
+export async function getCroppedImg(
+  imageSrc,
+  croppedArea
+) {
 
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+  const image =
+    await createImage(imageSrc)
 
-  const scaleX = image.naturalWidth / image.width;
-  const scaleY = image.naturalHeight / image.height;
+  const canvas =
+    document.createElement("canvas")
 
-  const cropX = pixelCrop.x * scaleX;
-  const cropY = pixelCrop.y * scaleY;
-  const cropWidth = pixelCrop.width * scaleX;
-  const cropHeight = pixelCrop.height * scaleY;
+  const ctx =
+    canvas.getContext("2d")
 
-  canvas.width = pixelCrop.width;
-  canvas.height = pixelCrop.height;
+
+  const cropX =
+
+    image.naturalWidth *
+    croppedArea.x /
+    100
+
+
+  const cropY =
+
+    image.naturalHeight *
+    croppedArea.y /
+    100
+
+
+  const cropWidth =
+
+    image.naturalWidth *
+    croppedArea.width /
+    100
+
+
+  const cropHeight =
+
+    image.naturalHeight *
+    croppedArea.height /
+    100
+
+
+  canvas.width =
+    cropWidth
+
+  canvas.height =
+    cropHeight
+
 
   ctx.drawImage(
+
     image,
+
     cropX,
     cropY,
+
     cropWidth,
     cropHeight,
+
     0,
     0,
-    canvas.width,
-    canvas.height
-  );
 
-  return new Promise((resolve) => {
-    canvas.toBlob((blob) => {
-      if (!blob) return;
+    cropWidth,
+    cropHeight
 
-      const previewUrl = URL.createObjectURL(blob);
-      resolve(previewUrl);
-    }, "image/jpeg");
-  });
+  )
+
+
+  return new Promise(resolve => {
+
+    canvas.toBlob(blob => {
+
+      if (!blob) return
+
+      resolve(
+        URL.createObjectURL(blob)
+      )
+
+    }, "image/jpeg")
+
+  })
+
 }

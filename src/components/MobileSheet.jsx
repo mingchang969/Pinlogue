@@ -687,12 +687,12 @@ function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mod
                         setCropData({
                             crop: data.crop,
                             zoom: data.zoom,
-                            croppedAreaPixels: data.croppedAreaPixels,
+                            croppedArea: data.croppedArea
                         });
 
                         const croppedImg = await getCroppedImg(
                             source,
-                            data.croppedAreaPixels
+                            data.croppedArea
                         );
 
                         setCroppedPreviewUrl(croppedImg);

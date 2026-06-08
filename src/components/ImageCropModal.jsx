@@ -6,11 +6,22 @@ function ImageCropModal({ image, initialCropData, onCancel, onSave }) {
     const [zoom, setZoom] = useState(initialCropData?.zoom || 1);
 
     const [ready, setReady] = useState(false);
-    const croppedAreaPixelsRef = useRef(null);
+    const cropResultRef = useRef(null);
 
-    const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-        croppedAreaPixelsRef.current = croppedAreaPixels;
-    }, []);
+    const onCropComplete = useCallback(
+        (croppedArea, croppedAreaPixels) => {
+
+            cropResultRef.current = {
+
+                crop,
+
+                zoom,
+
+                croppedArea
+
+            };
+
+        }, [crop, zoom])
 
     const stopEvent = (e) => {
         e.stopPropagation();
@@ -71,11 +82,10 @@ function ImageCropModal({ image, initialCropData, onCancel, onSave }) {
                         type="button"
                         disabled={!ready}
                         onClick={() =>
-                            onSave({
-                                crop,
-                                zoom,
-                                croppedAreaPixels: croppedAreaPixelsRef.current,
-                            })
+                            onSave(
+                                cropResultRef.current
+                            )
+
                         }
                     >
                         儲存

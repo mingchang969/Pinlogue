@@ -20,15 +20,15 @@ function CroppedImage({
 
       setLoading(true);
 
-      const pixels = cropData?.croppedAreaPixels;
+      const area = cropData?.croppedArea;
 
-      if (!pixels) {
+      if (!area) {
         setDisplayUrl(imageUrl);
         setLoading(false);
         return;
       }
 
-      const url = await getCroppedImg(imageUrl, pixels);
+      const url = await getCroppedImg(imageUrl, area);
 
       if (cancelled) return;
 
