@@ -2107,27 +2107,32 @@ out center 50;
                                         </Marker>
                                     ))
                                 : selectedTrip ?
-                                    selectedTrip.days?.[selectedDay - 1]?.places
-                                        ?.filter((p) => p.type !== "transport" && p.markerId)
-                                        .map((p, index) => {
-                                            const markerData = markers.find((m) => m.id === p.markerId);
-                                            if (!markerData) return null;
+                                    selectedTrip.days?.map((day, dayIndex) => {
+                                        const hasDayTag = dayIndex + 1 === selectedDay;
+                                        return (
+                                            day.places?.filter((p) => p.type !== "transport" && p.markerId)
+                                                .map((p, index) => {
+                                                    const markerData = markers.find((m) => m.id === p.markerId);
+                                                    if (!markerData) return null;
 
-                                            return (
-                                                <Marker
-                                                    key={p.id}
-                                                    position={[markerData.lat, markerData.lng]}
-                                                    icon={createSvgIcon(markerData.markerTag, markerData.title, index + 1)}
-                                                    eventHandlers={{
-                                                        click: () => {
-                                                            increaseClick(markerData.id, "marker");
-                                                            navigate(`/maps/${mapId}/markers/${markerData.id}`);
-                                                            expandHalf();
-                                                        }
-                                                    }}
-                                                />
-                                            );
-                                        })
+                                                    return (
+                                                        <Marker
+                                                            key={p.id}
+                                                            position={[markerData.lat, markerData.lng]}
+                                                            icon={createSvgIcon(markerData.markerTag, markerData.title, hasDayTag ? index + 1 : "")}
+                                                            eventHandlers={{
+                                                                click: () => {
+                                                                    increaseClick(markerData.id, "marker");
+                                                                    navigate(`/maps/${mapId}/markers/${markerData.id}`);
+                                                                    expandHalf();
+                                                                }
+                                                            }}
+                                                        />
+                                                    );
+                                                })
+                                        );
+                                    })
+
                                     :
                                     filterTag ?
                                         trips.filter((trip) => trip.tag === filterTag).map((trip) => {
@@ -2145,7 +2150,7 @@ out center 50;
                                                     }}
                                                     key={trip.days[0].places[0].id}
                                                     position={[fstPlaceData.lat, fstPlaceData.lng]}
-                                                    icon={createSvgIcon_trip(trip.tag, trip.title,  trip.days.length)}
+                                                    icon={createSvgIcon_trip(trip.tag, trip.title, trip.days.length)}
                                                 />);
                                         })
                                         : trips.map((trip) => {

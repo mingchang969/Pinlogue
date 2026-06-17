@@ -32,6 +32,7 @@ export const transportOptions = [
   { value: "bike", text: "自行車" },
   { value: "scooter", text: "機車" },
   { value: "car", text: "開車" },
+  { value: "bus", text: "公車" },
   { value: "MRT", text: "捷運" },
   { value: "train", text: "火車" },
   { value: "HSR", text: "高鐵" },
