@@ -33,7 +33,7 @@ function PinListItem({ data, tag, onClick, hasDayTag = false }) {
                             {hasDayTag ?
                                 <div className="dayTag" style={{ color: tag?.color }}>{`${data.days.length}日遊`}</div> : null}
                         </div>
-                        {safeCut(data.title, 6)}
+                        {safeCut(data.title, 9)}
                     </div>
                     <div className="ranking"><RankIcon rank={data.rank || null} lastRank={data.lastRank || null} /></div>
                 </div>

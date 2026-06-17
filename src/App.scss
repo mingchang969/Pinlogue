@@ -903,6 +903,7 @@ textarea {
                 padding: 2px;
                 border: solid #fff 1px;
                 border-radius: 6px;
+                text-wrap-mode: nowrap;
 
                 .icon {
                   display: flex;
@@ -922,7 +923,7 @@ textarea {
               display: flex;
               justify-content: flex-end;
               align-items: center;
-              width: 34px;
+              width: 14px;
               height: 100%;
               font-size: 12px;
               color: #fff;
@@ -1061,6 +1062,7 @@ textarea {
           border: solid #fff 1px;
           border-radius: 6px;
           font-size: 14px;
+          text-wrap-mode: nowrap;
 
           .icon {
             display: flex;
@@ -2104,6 +2106,7 @@ textarea {
                     padding: 2px;
                     border: solid #fff 1px;
                     border-radius: 6px;
+                    text-wrap-mode: nowrap;
 
                     .icon {
                       display: flex;
@@ -2186,6 +2189,7 @@ textarea {
               border: solid #fff 1px;
               border-radius: 6px;
               font-size: 14px;
+              text-wrap-mode: nowrap;
 
               .icon {
                 display: flex;

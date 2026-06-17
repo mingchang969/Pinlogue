@@ -2145,7 +2145,7 @@ out center 50;
                                                     }}
                                                     key={trip.days[0].places[0].id}
                                                     position={[fstPlaceData.lat, fstPlaceData.lng]}
-                                                    icon={createSvgIcon_trip(trip.tag, trip.title, trips.length)}
+                                                    icon={createSvgIcon_trip(trip.tag, trip.title,  trip.days.length)}
                                                 />);
                                         })
                                         : trips.map((trip) => {
@@ -2163,7 +2163,7 @@ out center 50;
                                                     }}
                                                     key={trip.days[0].places[0].id}
                                                     position={[fstPlaceData.lat, fstPlaceData.lng]}
-                                                    icon={createSvgIcon_trip(trip.tag, trip.title, trips.length)}
+                                                    icon={createSvgIcon_trip(trip.tag, trip.title, trip.days.length)}
                                                 />);
                                         })
                             :
