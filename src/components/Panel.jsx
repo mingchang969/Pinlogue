@@ -93,7 +93,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                 },]
             });
         }
-    }, [isEdit]);
+    }, [isEdit, selected]);
 
     // 上傳預覽圖
     const [previewUrl, setPreviewUrl] = useState(null);
@@ -453,7 +453,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                     selectedTrip={selectedTrip}
                     mode={mode}
                     onEdit={() => { setView(VIEW.EDIT); setTrip(selectedTrip); setIsEdit(true); }}
-                    onBack={() => { navigate(-1); }}
+                    onBack={() => { navigate(-1); setSelectedDay(1); }}
                 />
             );
         }
@@ -521,29 +521,29 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                         setIsEdit(false);
                         setUploadError("");
                         if (isMapInfo) {
-                            // setEditTitle("");
-                            // setEditIntro("");
-                            // setEditTag("");
+                            setEditTitle("");
+                            setEditIntro("");
+                            setEditTag("");
                             setView(VIEW.MAP_INFO);
                         } else {
-                            // if (mode === "pinListMode") {
-                            //     setEditTitle("");
-                            //     setEditIntro("");
-                            //     setEditTag("");
-                            // }
-                            // else {
-                            //     setEditTripSelected("");
-                            //     setSelectedDay(1);
-                            //     setTrip({
-                            //         title: "",
-                            //         intro: "",
-                            //         tag: "",
-                            //         imageUrl: "",
-                            //         days: [{
-                            //             places: []
-                            //         },]
-                            //     });
-                            // }
+                            if (mode === "pinListMode") {
+                                setEditTitle("");
+                                setEditIntro("");
+                                setEditTag("");
+                            }
+                            else {
+                                setEditTripSelected("");
+                                setSelectedDay(1);
+                                setTrip({
+                                    title: "",
+                                    intro: "",
+                                    tag: "",
+                                    imageUrl: "",
+                                    days: [{
+                                        places: []
+                                    },]
+                                });
+                            }
                             setView(VIEW.DETAIL);
                         }
                     }}
@@ -604,7 +604,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                         const nextCropData = {
                             crop: data.crop,
                             zoom: data.zoom,
-                            croppedArea:data.croppedArea
+                            croppedArea: data.croppedArea
                         }
 
                         cropDataRef.current = nextCropData

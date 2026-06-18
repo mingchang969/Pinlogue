@@ -36,6 +36,7 @@ import {
     tagDocRef,
     mapDocRef,
 } from "../utils/mapRefs";
+import { style } from "motion/react-client";
 
 function MapView({
     isMobile, currentUser, mapId, markers, tags, trips, mode, tagPanelMode, setTagPanelMode, selected, setSelected, filterTag, setFilterTag,
@@ -2033,29 +2034,35 @@ out center 50;
                     {/* trip 的 行程線條 區 */}
                     {mode === "postMode" && (
                         (isEdit || (isCreate && stepTrip === 2))
-                            ? editingTripDayRoutes.map((route, index) => (
-                                <Polyline
-                                    key={`editing-trip-route-${index}`}
-                                    positions={route}
-                                    pathOptions={{
-                                        color: "#da4d4d",
-                                        weight: 2,
-                                        opacity: 0.85,
-                                        dashArray: "8 8",
-                                    }}
-                                />
-                            ))
-                            : selectedTrip && tripDayRoutes.map((route, index) => (
-                                <Polyline
-                                    key={`trip-route-${index}`}
-                                    positions={route}
-                                    pathOptions={{
-                                        color: "#da4d4d",
-                                        weight: 2,
-                                        opacity: 0.85,
-                                    }}
-                                />
-                            ))
+                            ? editingTripDayRoutes.map((route, index) => {
+                                const isHighlight = (index + 1) === selectedDay;
+                                return (
+                                    <Polyline
+                                        key={`editing-trip-route-${index}`}
+                                        positions={route}
+                                        pathOptions={{
+                                            color: isHighlight ? "#da4d4d" : "#333",
+                                            weight: isHighlight ? 2 : 1.5,
+                                            opacity: isHighlight ? 0.85 : 0.25,
+                                            dashArray: "8 8",
+                                        }}
+                                    />
+                                )
+                            })
+                            : selectedTrip && tripDayRoutes.map((route, index) => {
+                                const isHighlight = (index + 1) === selectedDay;
+                                return (
+                                    <Polyline
+                                        key={`trip-route-${index}`}
+                                        positions={route}
+                                        pathOptions={{
+                                            color: isHighlight ? "#da4d4d" : "#333",
+                                            weight: isHighlight ? 2 : 1.5,
+                                            opacity: isHighlight ? 0.85 : 0.25,
+                                        }}
+                                    />
+                                )
+                            })
                     )}
 
                     {/* 已新增 marker 區 */}
@@ -2108,7 +2115,7 @@ out center 50;
                                     ))
                                 : selectedTrip ?
                                     selectedTrip.days?.map((day, dayIndex) => {
-                                        const hasDayTag = dayIndex + 1 === selectedDay;
+                                        const isHighlight = dayIndex + 1 === selectedDay;
                                         return (
                                             day.places?.filter((p) => p.type !== "transport" && p.markerId)
                                                 .map((p, index) => {
@@ -2118,8 +2125,9 @@ out center 50;
                                                     return (
                                                         <Marker
                                                             key={p.id}
+                                                            opacity={isHighlight ? 1 : 0.4}
                                                             position={[markerData.lat, markerData.lng]}
-                                                            icon={createSvgIcon(markerData.markerTag, markerData.title, hasDayTag ? index + 1 : "")}
+                                                            icon={createSvgIcon(markerData.markerTag, markerData.title, isHighlight ? index + 1 : "")}
                                                             eventHandlers={{
                                                                 click: () => {
                                                                     increaseClick(markerData.id, "marker");
