@@ -26,13 +26,10 @@ function DetailPanel_m({ mapId, currentUser, tag, selectedMarker, selectedTrip, 
     return (
         <>
             <div className="markerControlContainer">
-
                 {currentUser &&
                     <div className="edit"><Edit className='button'
                         onClick={onEdit} />
                     </div>}
-
-
                 <div className="title word-break">
                     <div className={(hasDayTag && "tag") || ""} style={{ borderColor: hasDayTag && tag?.color }}>
                         <div className="icon">
@@ -43,7 +40,6 @@ function DetailPanel_m({ mapId, currentUser, tag, selectedMarker, selectedTrip, 
                     </div>
                     <span>{mode === "pinListMode" ? selectedMarker?.title : selectedTrip?.title}</span>
                 </div>
-
                 <div className="return">
                     <div className="button">
                         <Arrow

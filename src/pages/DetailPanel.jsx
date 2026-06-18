@@ -8,12 +8,10 @@ function DetailPanel({ currentUser, tag, selectedMarker, selectedTrip, mode, onB
     return (
         <>
             <div className="markerControlContainer">
-                <div className="return">
-                    <div className="button">
-                        <Arrow
-                            onClick={onBack} />
-                    </div>
-                </div>
+                {currentUser &&
+                    <div className="edit"><Edit className='button'
+                        onClick={onEdit} />
+                    </div>}
                 <div className="title word-break">
                     <div className={(hasDayTag && "tag") || ""} style={{ borderColor: hasDayTag && tag?.color }}>
                         <div className="icon">
@@ -24,10 +22,12 @@ function DetailPanel({ currentUser, tag, selectedMarker, selectedTrip, mode, onB
                     </div>
                     <span>{mode === "pinListMode" ? selectedMarker?.title : selectedTrip?.title}</span>
                 </div>
-                {currentUser &&
-                    <div className="edit"><Edit className='button'
-                        onClick={onEdit} />
-                    </div>}
+                <div className="return">
+                    <div className="button">
+                        <Arrow
+                            onClick={onBack} />
+                    </div>
+                </div>
             </div>
             <div className="markerInfoContainer">
                 <div className="info">
