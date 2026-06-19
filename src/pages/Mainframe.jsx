@@ -155,7 +155,7 @@ function Mainframe({ currentUser, mode }) {
     useEffect(() => { // 監聽 Firestore 的 "trips" 集合，任何資料變化都會觸發
 
         if (!mapId) return;
-        const q = query(collection(db, "maps", mapId, "trips"));
+        const q = query(collection(db, "maps", mapId, "trips"), orderBy("rank", "asc"));
 
         const unsub = onSnapshot(q, (snapshot) => {
             const data = snapshot.docs.map((d) => ({
