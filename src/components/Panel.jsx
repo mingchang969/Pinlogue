@@ -28,7 +28,7 @@ import ListPanel from '../pages/ListPanel';
 import DetailPanel from '../pages/DetailPanel';
 import EditPanel from '../pages/EditPanel';
 
-function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, setTagPanelMode, selected, setSelected,
+function Panel({ canEdit, mapId, currentMap, markers, tags, trips, mode, setTagPanelMode, selected, setSelected,
     filterTag, setFilterTag, isEdit, setIsEdit, isCreate, setIsCreate,
     increaseClick, navigate, trip, setTrip, setSelectedDay, stepTrip, addPlace, editPlace, editTripSelected, setEditTripSelected,
     VIEW, view, setView }) {
@@ -415,7 +415,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
         if (view === VIEW.MAP_INFO) {
             return (
                 <MapInfoPanel
-                    currentUser={currentUser}
+                    canEdit={canEdit}
                     currentMap={currentMap}
                     onBack={() => { setView(VIEW.LIST); setIsMapInfo(false); }}
                     onEdit={() => { setIsMapInfo(true); setView(VIEW.EDIT); setIsEdit(true); }}
@@ -461,7 +461,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
         if (view === VIEW.DETAIL) {
             return (
                 <DetailPanel
-                    currentUser={currentUser}
+                    canEdit={canEdit}
                     hasDayTag={mode !== "pinListMode" ? true : false}
                     tag={tag}
                     trip={trip}
@@ -474,7 +474,7 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
             );
         }
 
-        if (currentUser && view === VIEW.EDIT) {
+        if (canEdit && view === VIEW.EDIT) {
             return (
                 <EditPanel
                     currentMap={currentMap}

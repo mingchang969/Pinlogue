@@ -7,7 +7,7 @@ import TripItem from '../components/TripItem'
 
 import { transportOptions } from "../config/optionConfig";
 
-function DetailPanel_m({ mapId, currentUser, tag, selectedMarker, selectedTrip, mode, onBack, onEdit,
+function DetailPanel_m({ mapId, canEdit, tag, selectedMarker, selectedTrip, mode, onBack, onEdit,
     markers, tags, trip, scrollRef, selectedDay, setSelectedDay, hasDayTag, increaseClick, navigate }) {
 
     // 將 分 轉為 小時和分
@@ -26,7 +26,7 @@ function DetailPanel_m({ mapId, currentUser, tag, selectedMarker, selectedTrip, 
     return (
         <>
             <div className="markerControlContainer">
-                {currentUser &&
+                {canEdit &&
                     <div className="edit"><Edit className='button'
                         onClick={onEdit} />
                     </div>}

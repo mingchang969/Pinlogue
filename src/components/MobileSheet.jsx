@@ -39,7 +39,7 @@ import {
     useMotionValue
 } from "motion/react";
 
-function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mode, setTagPanelMode, selected, setSelected,
+function MobileSheet({ canEdit, mapId, currentMap, markers, tags, trips, mode, setTagPanelMode, selected, setSelected,
     filterTag, setFilterTag, isEdit, setIsEdit, isCreate, setIsCreate,
     increaseClick, navigate, trip, setTrip, setSelectedDay, stepTrip, addPlace, editPlace, editTripSelected, setEditTripSelected,
     VIEW, view, setView, selectedDay, isMapInfo, setIsMapInfo, sheetPosition, setSheetPosition }) {
@@ -493,7 +493,7 @@ function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mod
         if (view === VIEW.MAP_INFO) {
             return (
                 <MapInfoPanel
-                    currentUser={currentUser}
+                    canEdit={canEdit}
                     currentMap={currentMap}
                     onBack={() => { setView(VIEW.LIST); setIsMapInfo(false); }}
                     onEdit={() => { setIsMapInfo(true); setView(VIEW.EDIT); setIsEdit(true); }}
@@ -541,7 +541,7 @@ function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mod
         if (view === VIEW.DETAIL) {
             return (
                 <DetailPanel_m
-                    currentUser={currentUser}
+                    canEdit={canEdit}
                     mapId={mapId}
                     hasDayTag={mode !== "pinListMode" ? true : false}
                     tag={tag}
@@ -563,7 +563,7 @@ function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mod
             );
         }
 
-        if (currentUser && view === VIEW.EDIT) {
+        if (canEdit && view === VIEW.EDIT) {
             return (
                 <EditPanel_m
                     currentMap={currentMap}

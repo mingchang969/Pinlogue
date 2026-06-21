@@ -12,22 +12,43 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import "./App.scss"
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { auth } from "./utils/firebase";
+import { auth, db } from "./utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 function App() {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true); 
+
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-            if (currentUser) {
-                setUser(currentUser);
-                // console.log(currentUser.uid);
+            if (!currentUser) {
+                setUser(null);
+                setLoading(false);
+                return;
             }
 
+            const fetchUser = async () => {
+                const userRef = doc(db, "users", currentUser.uid);
+                const userSnap = await getDoc(userRef);
+                const role = userSnap.exists() ? userSnap.data()?.role : null;
+
+                setUser({
+                    uid: currentUser.uid,
+                    email: currentUser.email,
+                    role: role,
+                });
+
+                setLoading(false);
+            };
+
+            fetchUser();
         });
 
         return () => unSubscribe();
     }, []);
+
+    if (loading) return null;
 
     return (
         <BrowserRouter>

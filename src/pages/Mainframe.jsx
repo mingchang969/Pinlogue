@@ -18,6 +18,7 @@ import {
     mapDocRef
 } from "../utils/mapRefs";
 import { getFunctions, httpsCallable } from "firebase/functions";
+
 const functions = getFunctions();
 const increaseClickFunc =
     httpsCallable(functions, "increaseClick");
@@ -281,9 +282,20 @@ function Mainframe({ currentUser, mode }) {
         );
     }
 
+    if (!currentMap) return null;
+
+    const canEdit = React.useMemo(() => {
+        if (!currentUser || !currentMap) return false;
+
+        return (
+            currentUser.role === "admin" ||
+            currentUser.uid === currentMap.ownerId
+        );
+    }, [currentUser, currentMap]);
+
     const sharedProps = {
         isMobile,
-        currentUser,
+        canEdit,
         mapId,
         currentMap,
         markers,
@@ -325,8 +337,6 @@ function Mainframe({ currentUser, mode }) {
         expandFull,
         collapseSheet,
     };
-
-    if (!currentMap) return null;
 
     return (
         <div className='container'>

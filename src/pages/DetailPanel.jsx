@@ -3,12 +3,12 @@ import { ReactComponent as Arrow } from "../images/Arrow_.svg"
 import { ReactComponent as Edit } from "../images/Edit.svg"
 import CroppedImage from '../components/CroppedImage'
 
-function DetailPanel({ currentUser, tag, selectedMarker, selectedTrip, mode, onBack, onEdit, trip, hasDayTag }) {
+function DetailPanel({ canEdit, tag, selectedMarker, selectedTrip, mode, onBack, onEdit, trip, hasDayTag }) {
 
     return (
         <>
             <div className="markerControlContainer">
-                {currentUser &&
+                {canEdit &&
                     <div className="edit"><Edit className='button'
                         onClick={onEdit} />
                     </div>}

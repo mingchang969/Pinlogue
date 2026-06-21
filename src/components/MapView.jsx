@@ -39,7 +39,7 @@ import {
 import { style } from "motion/react-client";
 
 function MapView({
-    isMobile, currentUser, mapId, markers, tags, trips, mode, tagPanelMode, setTagPanelMode, selected, setSelected, filterTag, setFilterTag,
+    isMobile, canEdit, mapId, markers, tags, trips, mode, tagPanelMode, setTagPanelMode, selected, setSelected, filterTag, setFilterTag,
     isEdit, setIsEdit, isCreate, setIsCreate, increaseClick, flyTarget, setFlyTarget, navigate,
     trip, setTrip, selectedDay, setSelectedDay, stepTrip, setStepTrip, editTripSelected, setEditTripSelected,
     addPlace, editPlace, view, expandHalf }) {
@@ -1108,7 +1108,7 @@ out center 50;
                                 <div className="tagPanel">
                                     {tagPanelMode === "normal" &&
                                         <>
-                                            {currentUser ? !filterTag ?
+                                            {canEdit ? !filterTag ?
                                                 <Add_ className="button" onClick={() => setTagPanelMode("add")}></Add_> :
                                                 <Edit_ className="button" onClick={() => { if (!selectedTag) return; setTagPanelMode("edit"); setTagTitle(selectedTag.label); setTagColor(selectedTag.colorName); setTagIcon(selectedTag.iconName) }}></Edit_>
                                                 : null
@@ -1129,7 +1129,7 @@ out center 50;
 
                                         </>
                                     }
-                                    {currentUser && tagPanelMode === "add" &&
+                                    {canEdit && tagPanelMode === "add" &&
                                         <>
                                             <input type="text"
                                                 placeholder="輸入標籤名稱"
@@ -1150,7 +1150,7 @@ out center 50;
                                             <div onClick={addTag} className={`buttonFinish ${tagTitle.trim() && tagColor && tagIcon ? "" : "disable"} `}>新增</div>
                                             <div onClick={() => { setTagPanelMode("normal"); setTagTitle(""); setTagColor(""); setTagIcon(""); }} className="buttonCancel"><Cross /></div>
                                         </>}
-                                    {currentUser && tagPanelMode === "edit" &&
+                                    {canEdit && tagPanelMode === "edit" &&
                                         <>
                                             <input type="text"
                                                 placeholder="輸入標籤名稱"
@@ -1177,7 +1177,7 @@ out center 50;
 
 
                             {/* 新增按鈕 */}
-                            {currentUser &&
+                            {canEdit &&
                                 <div className="AddPinPanel">
                                     {isCreate &&
                                         <>
@@ -1272,7 +1272,7 @@ out center 50;
                                     {tagPanelMode === "normal" &&
                                         <>
                                             {
-                                                currentUser ?
+                                                canEdit ?
                                                     !filterTag ?
                                                         <Add_ className="button" onClick={() => setTagPanelMode("add")}></Add_> :
                                                         <Edit_ className="button" onClick={() => { if (!selectedTag) return; setTagPanelMode("edit"); setTagTitle(selectedTag.label); setTagColor(selectedTag.colorName); setTagIcon(selectedTag.iconName) }}></Edit_>
@@ -1294,7 +1294,7 @@ out center 50;
 
                                         </>
                                     }
-                                    {currentUser && tagPanelMode === "add" &&
+                                    {canEdit && tagPanelMode === "add" &&
                                         <>
                                             <input type="text"
                                                 placeholder="輸入標籤名稱"
@@ -1315,7 +1315,7 @@ out center 50;
                                             <div onClick={addTag} className={`buttonFinish ${tagTitle.trim() && tagColor && tagIcon ? "" : "disable"} `}>新增</div>
                                             <div onClick={() => { setTagPanelMode("normal"); setTagTitle(""); setTagColor(""); setTagIcon(""); }} className="buttonCancel"><Cross /></div>
                                         </>}
-                                    {currentUser && tagPanelMode === "edit" &&
+                                    {canEdit && tagPanelMode === "edit" &&
                                         <>
                                             <input type="text"
                                                 placeholder="輸入標籤名稱"
@@ -1341,7 +1341,7 @@ out center 50;
                                 </div>}
 
                             {/* 新增按鈕 */}
-                            {currentUser &&
+                            {canEdit &&
                                 <div className="AddPinPanel">
                                     {!selected && <button onClick={() => { setIsCreate(!isCreate); setEditTripSelected(null); }}>
                                         {isCreate ? <CancelPin /> : <Add />}</button>}

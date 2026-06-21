@@ -3,12 +3,12 @@ import { ReactComponent as Arrow } from "../images/Arrow_.svg"
 import { ReactComponent as Edit } from "../images/Edit.svg"
 import CroppedImage from '../components/CroppedImage'
 
-function MapInfoPanel({ currentUser, currentMap, onBack, onEdit }) {
+function MapInfoPanel({ canEdit, currentMap, onBack, onEdit }) {
     return (
         <>
             <div className="markerControlContainer">
                 
-                {currentUser &&
+                {canEdit &&
                     <div className="edit" onClick={
                         onEdit
                     }><Edit className='button' />
