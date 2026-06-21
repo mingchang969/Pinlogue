@@ -1,4 +1,5 @@
 const functions = require("firebase-functions");
+const { onCall } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
 const { onSchedule } = require("firebase-functions/v2/scheduler");
 
@@ -177,28 +178,28 @@ async function updateAllMapSubCollectionRankings() {
 */
 
 exports.updateAllRankingHttp =
-functions.https.onRequest(
-async(req,res)=>{
+  functions.https.onRequest(
+    async (req, res) => {
 
-try{
+      try {
 
- await updateAllMapSubCollectionRankings();
+        await updateAllMapSubCollectionRankings();
 
- res.send(
-  "Ranking updated",
- );
+        res.send(
+          "Ranking updated",
+        );
 
-}catch(err){
+      } catch (err) {
 
- console.error(err);
+        console.error(err);
 
- res
- .status(500)
- .send(err.message);
+        res
+          .status(500)
+          .send(err.message);
 
-}
+      }
 
-});
+    });
 
 
 
@@ -209,35 +210,35 @@ try{
 */
 
 exports.updateAllRankingAuto =
-onSchedule(
-{
- schedule:
-  "every 6 hours",
+  onSchedule(
+    {
+      schedule:
+        "every 6 hours",
 
- timeZone:
-  "Asia/Taipei",
+      timeZone:
+        "Asia/Taipei",
 
-},
-async()=>{
+    },
+    async () => {
 
- try{
+      try {
 
-  console.log(
-   "Auto ranking start",
+        console.log(
+          "Auto ranking start",
+        );
+
+        await updateAllMapSubCollectionRankings();
+
+      } catch (err) {
+
+        console.error(
+          err,
+        );
+
+      }
+
+    }
   );
-
-  await updateAllMapSubCollectionRankings();
-
- }catch(err){
-
-  console.error(
-   err,
-  );
-
- }
-
-}
-);
 
 
 
@@ -248,345 +249,345 @@ async()=>{
 */
 
 function calculateDiversityScore(
- data,
-){
+  data,
+) {
 
- const markerCount =
-  data.markerCount ||
-  0;
+  const markerCount =
+    data.markerCount ||
+    0;
 
- const tripCount =
-  data.tripCount ||
-  0;
+  const tripCount =
+    data.tripCount ||
+    0;
 
- const clickCount =
-  data.clickCount ||
-  0;
+  const clickCount =
+    data.clickCount ||
+    0;
 
- return (
+  return (
 
-  markerCount*4+
+    markerCount * 4 +
 
-  tripCount*5+
+    tripCount * 5 +
 
-  Math.log10(
-   clickCount+1,
-  )*3
+    Math.log10(
+      clickCount + 1,
+    ) * 3
 
- );
+  );
 
 }
 
 
 
-async function updateMapScores(){
+async function updateMapScores() {
 
- const snapshot =
- await db
- .collection("maps")
- .get();
+  const snapshot =
+    await db
+      .collection("maps")
+      .get();
 
- let batch =
- db.batch();
+  let batch =
+    db.batch();
 
- let count=0;
+  let count = 0;
 
- const commits=[];
+  const commits = [];
 
- for(
-  const doc
-  of snapshot.docs
- ){
+  for (
+    const doc
+    of snapshot.docs
+  ) {
 
-  const data=
-  doc.data();
+    const data =
+      doc.data();
 
-  const score=
-  calculateDiversityScore(
-   data,
-  );
+    const score =
+      calculateDiversityScore(
+        data,
+      );
 
-  if(
-   data.diversityScore
-   !==score
-  ){
+    if (
+      data.diversityScore
+      !== score
+    ) {
 
-   batch.update(
-    doc.ref,
-    {
-     diversityScore:
-      score,
-    },
-   );
+      batch.update(
+        doc.ref,
+        {
+          diversityScore:
+            score,
+        },
+      );
 
-   count++;
+      count++;
+
+    }
+
+    if (
+      count >= MAX_BATCH
+    ) {
+
+      commits.push(
+        batch.commit(),
+      );
+
+      batch =
+        db.batch();
+
+      count = 0;
+
+    }
 
   }
 
-  if(
-   count>=MAX_BATCH
-  ){
+  if (count > 0) {
 
-   commits.push(
-    batch.commit(),
-   );
-
-   batch=
-   db.batch();
-
-   count=0;
+    commits.push(
+      batch.commit(),
+    );
 
   }
 
- }
-
- if(count>0){
-
-  commits.push(
-   batch.commit(),
+  await Promise.all(
+    commits,
   );
-
- }
-
- await Promise.all(
-  commits,
- );
 
 }
 
 
 
 async function updateMapRanking({
- orderField,
- rankField,
- lastRankField,
- limitCount=
- LIMIT_COUNT,
-}){
-
- const snapshot=
- await db
- .collection("maps")
- .orderBy(
   orderField,
-  "desc",
- )
- .get();
+  rankField,
+  lastRankField,
+  limitCount =
+  LIMIT_COUNT,
+}) {
 
- if(snapshot.empty){
+  const snapshot =
+    await db
+      .collection("maps")
+      .orderBy(
+        orderField,
+        "desc",
+      )
+      .get();
 
-  return;
+  if (snapshot.empty) {
 
- }
+    return;
 
- const topDocs=
- snapshot.docs.slice(
-  0,
-  limitCount,
- );
+  }
 
- const rankMap=
- new Map();
+  const topDocs =
+    snapshot.docs.slice(
+      0,
+      limitCount,
+    );
 
- topDocs.forEach(
- (doc,index)=>{
+  const rankMap =
+    new Map();
 
- rankMap.set(
- doc.id,
- index+1,
- );
+  topDocs.forEach(
+    (doc, index) => {
 
- });
+      rankMap.set(
+        doc.id,
+        index + 1,
+      );
 
- let batch=
- db.batch();
+    });
 
- let count=0;
+  let batch =
+    db.batch();
 
- const commits=[];
+  let count = 0;
 
- for(
- const doc
- of snapshot.docs
- ){
+  const commits = [];
 
- const data=
- doc.data();
+  for (
+    const doc
+    of snapshot.docs
+  ) {
 
- const newRank=
+    const data =
+      doc.data();
 
- rankMap.get(
- doc.id,
- )??
+    const newRank =
 
- OUTSIDE_RANK;
+      rankMap.get(
+        doc.id,
+      ) ??
 
- if(
- data[
- rankField
- ]!==newRank
- ){
+      OUTSIDE_RANK;
 
- batch.update(
- doc.ref,
- {
+    if (
+      data[
+      rankField
+      ] !== newRank
+    ) {
 
- [lastRankField]:
+      batch.update(
+        doc.ref,
+        {
 
- data[
- rankField
- ]??
+          [lastRankField]:
 
- OUTSIDE_RANK,
+            data[
+            rankField
+            ] ??
 
- [rankField]:
+            OUTSIDE_RANK,
 
- newRank,
+          [rankField]:
 
- }
+            newRank,
 
- );
+        }
 
- count++;
+      );
 
- }
+      count++;
 
- if(
- count>=MAX_BATCH
- ){
+    }
 
- commits.push(
- batch.commit(),
- );
+    if (
+      count >= MAX_BATCH
+    ) {
 
- batch=
- db.batch();
+      commits.push(
+        batch.commit(),
+      );
 
- count=0;
+      batch =
+        db.batch();
 
- }
+      count = 0;
 
- }
+    }
 
- if(count>0){
+  }
 
- commits.push(
- batch.commit(),
- );
+  if (count > 0) {
 
- }
+    commits.push(
+      batch.commit(),
+    );
 
- await Promise.all(
- commits,
- );
+  }
+
+  await Promise.all(
+    commits,
+  );
 
 }
 
 
 
-async function updateAllMapRankings(){
+async function updateAllMapRankings() {
 
- await updateMapScores();
+  await updateMapScores();
 
- await updateMapRanking({
+  await updateMapRanking({
 
- orderField:
- "clickCount",
+    orderField:
+      "clickCount",
 
- rankField:
- "hotRank",
+    rankField:
+      "hotRank",
 
- lastRankField:
- "lastHotRank",
+    lastRankField:
+      "lastHotRank",
 
- });
+  });
 
- await updateMapRanking({
+  await updateMapRanking({
 
- orderField:
- "diversityScore",
+    orderField:
+      "diversityScore",
 
- rankField:
- "diverseRank",
+    rankField:
+      "diverseRank",
 
- lastRankField:
- "lastDiverseRank",
+    lastRankField:
+      "lastDiverseRank",
 
- });
+  });
 
- await updateMapRanking({
+  await updateMapRanking({
 
- orderField:
- "createdAt",
+    orderField:
+      "createdAt",
 
- rankField:
- "newRank",
+    rankField:
+      "newRank",
 
- lastRankField:
- "lastNewRank",
+    lastRankField:
+      "lastNewRank",
 
- });
+  });
 
 }
 
 
 
 exports.updateMapsRankingHttp =
-functions.https.onRequest(
-async(req,res)=>{
+  functions.https.onRequest(
+    async (req, res) => {
 
-try{
+      try {
 
- await updateAllMapRankings();
+        await updateAllMapRankings();
 
- res.send(
- "maps updated",
- );
+        res.send(
+          "maps updated",
+        );
 
-}catch(err){
+      } catch (err) {
 
- console.error(
- err,
- );
+        console.error(
+          err,
+        );
 
- res
- .status(500)
- .send(
- err.message,
- );
+        res
+          .status(500)
+          .send(
+            err.message,
+          );
 
-}
+      }
 
-});
+    });
 
 
 
 exports.updateMapsRankingAuto =
-onSchedule(
-{
- schedule:
- "every 6 hours",
+  onSchedule(
+    {
+      schedule:
+        "every 6 hours",
 
- timeZone:
- "Asia/Taipei",
+      timeZone:
+        "Asia/Taipei",
 
-},
-async()=>{
+    },
+    async () => {
 
- try{
+      try {
 
- await updateAllMapRankings();
+        await updateAllMapRankings();
 
- }catch(err){
+      } catch (err) {
 
- console.error(
- err,
- );
+        console.error(
+          err,
+        );
 
- }
+      }
 
-}
-);
+    }
+  );
 
 
 
@@ -597,102 +598,173 @@ async()=>{
 */
 
 exports.getImageKeys =
-functions.https.onRequest(
-async(req,res)=>{
+  functions.https.onRequest(
+    async (req, res) => {
 
-try{
+      try {
 
- const mapsSnap=
- await db
- .collection("maps")
- .get();
+        const mapsSnap =
+          await db
+            .collection("maps")
+            .get();
 
- const keys=[];
+        const keys = [];
 
- for(
- const mapDoc
- of mapsSnap.docs
- ){
+        for (
+          const mapDoc
+          of mapsSnap.docs
+        ) {
 
- const markerSnap=
+          const markerSnap =
 
- await mapDoc.ref
- .collection(
- "markers",
- )
- .get();
+            await mapDoc.ref
+              .collection(
+                "markers",
+              )
+              .get();
 
- const tripSnap=
+          const tripSnap =
 
- await mapDoc.ref
- .collection(
- "trips",
- )
- .get();
+            await mapDoc.ref
+              .collection(
+                "trips",
+              )
+              .get();
 
- markerSnap.forEach(
- doc=>{
+          markerSnap.forEach(
+            doc => {
 
- const data=
- doc.data();
+              const data =
+                doc.data();
 
- if(
- data.imageKey
- ){
+              if (
+                data.imageKey
+              ) {
 
- keys.push(
- data.imageKey,
- );
+                keys.push(
+                  data.imageKey,
+                );
 
- }
+              }
 
- });
+            });
 
- tripSnap.forEach(
- doc=>{
+          tripSnap.forEach(
+            doc => {
 
- const data=
- doc.data();
+              const data =
+                doc.data();
 
- if(
- data.imageKey
- ){
+              if (
+                data.imageKey
+              ) {
 
- keys.push(
- data.imageKey,
- );
+                keys.push(
+                  data.imageKey,
+                );
 
- }
+              }
 
- });
+            });
 
- }
+        }
 
- res.json({
+        res.json({
 
- ok:true,
+          ok: true,
 
- keys,
+          keys,
 
- });
+        });
 
-}catch(err){
+      } catch (err) {
 
- console.error(
- err,
- );
+        console.error(
+          err,
+        );
 
- res
- .status(500)
- .json({
+        res
+          .status(500)
+          .json({
 
- ok:false,
+            ok: false,
 
- error:
- err.message,
+            error:
+              err.message,
 
- });
+          });
 
-}
+      }
+
+    });
+
+/*
+|--------------------------------------------------------------------------
+| 地圖 點擊計數器
+|--------------------------------------------------------------------------
+*/
+exports.increaseClick = onCall(async (request) => {
+
+  const {
+    type,
+    mapId,
+    targetId,
+  } = request.data;
+
+  let ref;
+
+  switch (type) {
+
+    case "map":
+
+      ref = db
+        .collection("maps")
+        .doc(mapId);
+
+      break;
+
+    case "marker":
+
+      ref = db
+        .collection("maps")
+        .doc(mapId)
+        .collection("markers")
+        .doc(targetId);
+
+      break;
+
+    case "trip":
+
+      ref = db
+        .collection("maps")
+        .doc(mapId)
+        .collection("trips")
+        .doc(targetId);
+
+      break;
+
+    default:
+
+      throw new Error(
+        "invalid type"
+      );
+
+  }
+
+  await ref.update({
+
+    clickCount:
+      admin.firestore.FieldValue.increment(1),
+
+    lastViewedAt:
+      admin.firestore.FieldValue.serverTimestamp(),
+
+  });
+
+  return {
+
+    success: true,
+
+  };
 
 });

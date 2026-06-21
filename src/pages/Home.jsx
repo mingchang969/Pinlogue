@@ -24,6 +24,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { reload, signOut } from "firebase/auth";
 import { button } from 'motion/react-client';
 
+import { getFunctions, httpsCallable } from "firebase/functions";
+const functions = getFunctions();
+const increaseClickFunc =
+    httpsCallable(functions, "increaseClick");
+
 function LookMoreBtn({ onClick }) {
     return (
         <div className="lookMoreBtn" onClick={onClick}>
@@ -145,11 +150,10 @@ function Home({ currentUser }) {
     async function increaseClick(id) {
         if (!id) return;
 
-        await updateDoc(mapDocRef(id), {
-            clickCount: increment(1),
-            updatedAt: new Date()
-        });
-        return;
+        await increaseClickFunc({
+            type: "map",
+            mapId: id
+        }).catch(console.error);
 
     }
 
@@ -187,6 +191,7 @@ function Home({ currentUser }) {
             imageKey: uploadedKey,
             cropData,
             publicity,
+            ownerId: currentUser.uid,
             clickCount: 0,
             markerCount: 0,
             tripCount: 0,

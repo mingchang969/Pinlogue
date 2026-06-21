@@ -17,6 +17,10 @@ import {
     tagDocRef,
     mapDocRef
 } from "../utils/mapRefs";
+import { getFunctions, httpsCallable } from "firebase/functions";
+const functions = getFunctions();
+const increaseClickFunc =
+    httpsCallable(functions, "increaseClick");
 
 function Mainframe({ currentUser, mode }) {
 
@@ -192,24 +196,11 @@ function Mainframe({ currentUser, mode }) {
     async function increaseClick(id, type) {
         if (!id || !mapId) return;
 
-        try {
-            if (type === "marker") {
-                await updateDoc(markerDocRef(mapId, id), {
-                    clickCount: increment(1),
-                    updatedAt: new Date()
-                });
-                return;
-            }
-
-            if (type === "trip") {
-                await updateDoc(tripDocRef(mapId, id), {
-                    clickCount: increment(1),
-                    updatedAt: new Date()
-                });
-            }
-        } catch (err) {
-            console.error("update failed:", err);
-        }
+        await increaseClickFunc({
+            type,
+            mapId: mapId,
+            targetId: id,
+        }).catch(console.error);
     }
     // 增加 行程地標
     function addPlace(markerId) {
