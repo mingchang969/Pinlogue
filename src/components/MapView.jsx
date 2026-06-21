@@ -637,6 +637,7 @@ out center 50;
 
     //// 新增行程
     async function addTrip() {
+
         if (!trip.title.trim() && !trip.days.every(day => day.places.length > 0
             // && day.places.every(p => (p.startTime && p.endTime) || p.transportType)
         )) {
@@ -688,7 +689,11 @@ out center 50;
             imageUrl: "",
             days: [{
                 places: []
-            },]
+            },],
+            clickCount: 0,
+            rank: 999999999,
+            lastRank: 999999999,
+            createdAt: new Date(),
         });
         setFile(null);
         setCropData({

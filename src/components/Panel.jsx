@@ -90,7 +90,11 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                 imageUrl: "",
                 days: [{
                     places: []
-                },]
+                },],
+                clickCount: 0,
+                rank: 999999999,
+                lastRank: 999999999,
+                createdAt: new Date(),
             });
         }
     }, [isEdit, selected]);
@@ -233,7 +237,13 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                 intro: "",
                 tag: "",
                 imageUrl: "",
-                days: [{ places: [] }],
+                days: [{
+                    places: []
+                },],
+                clickCount: 0,
+                rank: 999999999,
+                lastRank: 999999999,
+                createdAt: new Date(),
             });
             setEditTripSelected(null);
             resetImageState();
@@ -265,7 +275,13 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                 intro: "",
                 tag: "",
                 imageUrl: "",
-                days: [{ places: [] }],
+                days: [{
+                    places: []
+                },],
+                clickCount: 0,
+                rank: 999999999,
+                lastRank: 999999999,
+                createdAt: new Date(),
             });
             setEditTripSelected(null);
             navigate(`/maps/${mapId}/tripList`);
@@ -541,7 +557,11 @@ function Panel({ currentUser, mapId, currentMap, markers, tags, trips, mode, set
                                     imageUrl: "",
                                     days: [{
                                         places: []
-                                    },]
+                                    },],
+                                    clickCount: 0,
+                                    rank: 999999999,
+                                    lastRank: 999999999,
+                                    createdAt: new Date(),
                                 });
                             }
                             setView(VIEW.DETAIL);

@@ -168,7 +168,11 @@ function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mod
                 imageUrl: "",
                 days: [{
                     places: []
-                },]
+                },],
+                clickCount: 0,
+                rank: 999999999,
+                lastRank: 999999999,
+                createdAt: new Date(),
             });
         }
     }, [isMapInfo, selectedMarker, selectedTrip]);
@@ -309,7 +313,13 @@ function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mod
                 intro: "",
                 tag: "",
                 imageUrl: "",
-                days: [{ places: [] }],
+                days: [{
+                    places: []
+                },],
+                clickCount: 0,
+                rank: 999999999,
+                lastRank: 999999999,
+                createdAt: new Date(),
             });
             setEditTripSelected(null);
             resetImageState();
@@ -341,7 +351,13 @@ function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mod
                 intro: "",
                 tag: "",
                 imageUrl: "",
-                days: [{ places: [] }],
+                days: [{
+                    places: []
+                },],
+                clickCount: 0,
+                rank: 999999999,
+                lastRank: 999999999,
+                createdAt: new Date(),
             });
             setEditTripSelected(null);
             navigate(`/maps/${mapId}/tripList`);
@@ -629,7 +645,11 @@ function MobileSheet({ currentUser, mapId, currentMap, markers, tags, trips, mod
                                     imageUrl: "",
                                     days: [{
                                         places: []
-                                    },]
+                                    },],
+                                    clickCount: 0,
+                                    rank: 999999999,
+                                    lastRank: 999999999,
+                                    createdAt: new Date(),
                                 });
                             }
                             setView(VIEW.DETAIL);
